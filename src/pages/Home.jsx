@@ -1,9 +1,9 @@
 export default function Home() {
   return (
     <>
-      <section className="container">
+      <section className="container mx-auto mt-30">
         <h1 className="text-center">
-          Explore movies, shows, and the people who bring them to life.
+          Explore Movies, Shows, And the people who bring them to life.
         </h1>
         <p className="text-center">
           Whether you’re chasing old favorites or discovering something new,
