@@ -1,6 +1,54 @@
 @import "tailwindcss";
+body {
+  background-color: #080c11;
+  background-color: hsl(214, 33%, 9%);
+  background-color: hsl(214, 33%, 9%);
+  background-color: hsl(214, 33%, 9%);
+  background-color: hsl(214, 33%, 9%);
+}
 
 @theme {
   --font-popppins: "Poppins", sans-serif;
   --font-work-sans: "Work Sans", sans-serif;
+  --color-bg-100: #0b0f19;
+  --color-bg-200: #121826;
+  --color-bg-300: #1c2433;
+  --color-bg-400: #2b3648;
+  --color-bg-500: #3c4a5e;
+
+  --color-text-100: #f8fafc;
+  --color-text-200: #cbd5e1;
+  --color-text-300: #94a3b8;
+
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 20px;
+  --spacing-2xl: 24px;
+  --spacing-3xl: 32px;
+  --spacing-4xl: 40px;
+}
+
+@layer base {
+  body {
+    @apply bg-bg-100;
+  }
+  h1 {
+    @apply text-4xl text-text-100 tracking-tight leading-tight font-bold md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-text-100;
+  }
+  h3 {
+    @apply text-text-100;
+  }
+  p,
+  a,
+  button {
+    @apply text-text-200;
+  }
+}
+@utility flex-center {
+  @apply flex justify-center items-center;
 }
