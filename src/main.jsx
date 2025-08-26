@@ -5,11 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.jsx";
 import Movie from "./pages/Movie.jsx";
 import Tv from "./pages/Tv.jsx";
-import MediaLayout, {
-  loader as mediaLayoutLoader,
-} from "./layouts/MediaLayout.jsx";
 import MediaDetails from "./pages/MediaDetails.jsx";
-import MediaReviews from "./pages/MediaReviews.jsx";
+import MediaCasts from "./components/MediaCasts.jsx";
+import MediaReviews from "./components/MediaReviews.jsx";
 import PersonDetails from "./pages/PersonDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
@@ -32,12 +30,11 @@ const rotuer = createBrowserRouter([
           { path: "discover", Component: Discover },
           {
             path: ":mediaType/:id",
-            Component: MediaLayout,
+            Component: MediaDetails,
             children: [
-              { index: true, Component: MediaDetails },
+              { index: true, Component: MediaCasts },
               { path: "reviews", Component: MediaReviews },
             ],
-            loader: mediaLayoutLoader,
           },
           { path: "person", Component: PersonDetails },
           { path: "*", Component: NotFound },

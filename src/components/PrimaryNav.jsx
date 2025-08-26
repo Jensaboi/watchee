@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 export default function PrimaryNav() {
   return (
     <nav>
-      <ul className="flex gap-3">
+      <ul className="">
         <li>
           <NavLink>Movies</NavLink>
         </li>

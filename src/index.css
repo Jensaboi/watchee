@@ -1,24 +1,19 @@
 @import "tailwindcss";
-body {
-  background-color: #080c11;
-  background-color: hsl(214, 33%, 9%);
-  background-color: hsl(214, 33%, 9%);
-  background-color: hsl(214, 33%, 9%);
-  background-color: hsl(214, 33%, 9%);
-}
 
 @theme {
   --font-popppins: "Poppins", sans-serif;
   --font-work-sans: "Work Sans", sans-serif;
-  --color-bg-100: #0b0f19;
-  --color-bg-200: #121826;
-  --color-bg-300: #1c2433;
-  --color-bg-400: #2b3648;
-  --color-bg-500: #3c4a5e;
+  --color-bg-100: #141414; /* Netflix black like */
+  --color-bg-200: #1c1c1c; /* slightly lighter than 100 */
+  --color-bg-300: #212121; /* for cards, borders */
+  --color-bg-400: #2a2a2a; /* subtle hover states or secondary panels */
+  --color-bg-500: #333333; /* slightly lighter accents */
 
-  --color-text-100: #f8fafc;
-  --color-text-200: #cbd5e1;
-  --color-text-300: #94a3b8;
+  --color-text-100: #ffffff; /* main text on primary bg */
+  --color-text-200: #e5e5e5; /* slightly muted text */
+  --color-text-300: #cccccc; /* secondary text, subtitles */
+  --color-text-400: #999999; /* tertiary text, hints */
+  --color-text-500: #666666; /* less prominent info */
 
   --spacing-xs: 4px;
   --spacing-sm: 8px;
