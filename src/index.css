@@ -35,13 +35,17 @@
     @apply text-text-200 text-base;
   }
   h1 {
-    @apply text-4xl text-text-100 tracking-tight leading-tight font-bold md:text-5xl lg:text-6xl;
+    @apply font-work-sans text-4xl text-text-100 tracking-tight leading-tight font-bold md:text-5xl lg:text-6xl;
   }
   h2 {
-    @apply text-text-100;
+    @apply font-work-sans text-text-100;
   }
   h3 {
-    @apply text-text-100;
+    @apply font-work-sans text-text-100;
+  }
+  button,
+  a {
+    @apply hover:cursor-pointer;
   }
 }
 

@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <section className="container mx-auto mt-30">
+      <section className="container mx-auto mt-25 p-xl ">
         <h1 className="text-center">
           Explore Movies, Shows, And the people who bring them to life.
         </h1>
