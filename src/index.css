@@ -29,6 +29,11 @@
   body {
     @apply bg-bg-100;
   }
+  p,
+  a,
+  button {
+    @apply text-text-200 text-base;
+  }
   h1 {
     @apply text-4xl text-text-100 tracking-tight leading-tight font-bold md:text-5xl lg:text-6xl;
   }
@@ -37,11 +42,6 @@
   }
   h3 {
     @apply text-text-100;
-  }
-  p,
-  a,
-  button {
-    @apply text-text-200;
   }
 }
 @utility flex-center {
