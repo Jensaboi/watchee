@@ -29,7 +29,7 @@ export default function PrimaryNav({ isOpen }) {
         data-[open=false]:translate-x-[100%]
         "
     >
-      <ul className="flex h-full w-full flex-col gap-3xl md:flex-row">
+      <ul className="flex h-full w-full flex-col gap-3xl md:gap-xs md:flex-row">
         <li>
           <NavLink
             to="/movie"
