@@ -37,7 +37,7 @@ export default function Modal({
 
   return createPortal(
     <div
-      className={`${className} fixed inset-0 w-full h-full bg-black/50 backdrop-blur-[2px] transistion-all z-10`}
+      className={`${className} z-50 fixed inset-0 w-full h-full bg-black/50 backdrop-blur-[2px] transistion-all`}
     >
       {children}
     </div>,

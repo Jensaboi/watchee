@@ -28,7 +28,7 @@ export default function Header() {
 
         <MobileSearchModal isOpen={search.isOpen} close={search.close} />
 
-        <Button className="z-2" variant="icon" onClick={nav.toggle}>
+        <Button className="z-30" variant="icon" onClick={nav.toggle}>
           <Hamburger isOpen={nav.isOpen} />
         </Button>
       </div>

@@ -5,6 +5,7 @@ export default function PrimaryNav({ isOpen }) {
     <nav
       data-open={isOpen}
       className="
+        z-20
         bg-bg-200
         md:py-2
         md:px-0
