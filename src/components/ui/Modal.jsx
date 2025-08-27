@@ -30,5 +30,8 @@ export default function Modal({ isOpen = false, close, children }) {
 
   if (!isOpen) return null;
 
-  return createPortal(<div className="">{children}</div>, document.body);
+  return createPortal(
+    <div className="fixed inset-0 w-full h-full bg-black z-10">{children}</div>,
+    document.body
+  );
 }

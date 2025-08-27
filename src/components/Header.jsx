@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import useToggle from "../hooks/useToggle";
 
 import PrimaryNav from "./PrimaryNav";
+import MobileSearchModal from "./MobileSearchModal";
 import Hamburger from "./Hamburger";
 import Button from "./ui/Button";
 
@@ -21,6 +22,9 @@ export default function Header() {
         <Button variant="icon" onClick={search.toggle}>
           <Search style={{ color: "#ffffff" }} />
         </Button>
+
+        <MobileSearchModal isOpen={search.isOpen} />
+
         <Button variant="icon" onClick={nav.toggle}>
           <Hamburger isOpen={nav.isOpen} />
         </Button>
