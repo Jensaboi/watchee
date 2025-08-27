@@ -1,15 +1,26 @@
-import { fetchDetails } from "../lib/tmdbApi";
+import { fetchDetails, fetchTrailer, fetchAgeRatings } from "../lib/tmdbApi";
 import { fetchOmdb } from "../lib/omdbApi";
-import { useLoaderData } from "react-router-dom";
+import {
+  getYearStr,
+  formatRunTimeStr,
+  getGenres,
+  getAgeRating,
+} from "../lib/utility";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import { useTMDBConfig } from "../context/ConfigContext";
 import { useGenres } from "../context/GenreContext";
+import Button from "../components/ui/Button";
+import { MoveLeft, Plus, Star } from "lucide-react";
+import MediaTitle from "../components/MediaTitle";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
 
   try {
-    const film = await fetchDetails({ mediaType, id });
-    return film;
+    const media = await fetchDetails({ mediaType, id });
+    const trailer = await fetchTrailer({ mediaType, id });
+    const ageRatings = await fetchAgeRatings({ ...params });
+    return { media, trailer, ageRatings };
   } catch (error) {
   } finally {
   }
@@ -17,21 +28,32 @@ export async function loader({ params }) {
 }
 
 export default function MediaDetails() {
-  const film = useLoaderData();
+  const { media, trailer, ageRatings } = useLoaderData();
   const { config } = useTMDBConfig();
   const { movieGenres, tvGenres } = useGenres();
+  const navigate = useNavigate();
+  const { mediaType, id } = useParams();
+  //console.log(config.backdropBaseUrl);
+  console.log("details", media);
+  console.log("trailer", trailer);
+  console.log("ratings", ageRatings);
 
-  console.log(config.backdropBaseUrl);
-  console.log("details", film);
-
-  const title = film?.title || film?.name;
+  const title = media?.title || media?.name;
+  const releaseDate = media?.release_date || media.first_air_date;
   return (
     <>
-      <div className="relative w-full h-full min-h-[86vh]">
+      <div className="relative p-lg w-full h-full min-h-[86vh]">
+        <Button
+          onClick={() => navigate(-1)}
+          className="z-3 relative"
+          variant="icon"
+        >
+          <MoveLeft />
+        </Button>
         {/* backdrop img */}
         <img
           alt=""
-          src={config?.backdropBaseUrl?.[3] + film.backdrop_path}
+          src={config?.backdropBaseUrl?.[3] + media.backdrop_path}
           className="
             pointer-events-none
             absolute
@@ -62,12 +84,31 @@ export default function MediaDetails() {
             to-bg-100/75 to-100%
             "
         ></div>
-        <section className="relative z-10 container mx-auto flex flex-col items-center p-lg">
+        <section className="relative z-10 container mx-auto mt-1 flex flex-col items-center gap-xl">
           <img
             alt={`${title}`}
-            src={config?.posterBaseUrl?.[3] + film.poster_path}
-            className="object-cover object-center w-60 rounded-md shadow-2xl border border-bg-300/20"
+            src={config?.posterBaseUrl?.[3] + media.poster_path}
+            className="object-cover object-center w-52 sm:w-60 rounded-md shadow-2xl border border-bg-300/20"
           />
+          <div className="flex flex-col gap-lg">
+            <MediaTitle
+              title={title}
+              year={getYearStr(releaseDate)}
+              runtime={formatRunTimeStr(media?.runtime)}
+              ageRating={getAgeRating(mediaType, ageRatings)}
+            />
+            <div className="flex-center gap-sm">
+              <Button variant="solid" size="md">
+                Play trailer
+              </Button>
+              <Button variant="icon">
+                <Plus />
+              </Button>
+              <Button variant="icon">
+                <Star />
+              </Button>
+            </div>
+          </div>
         </section>
       </div>
     </>

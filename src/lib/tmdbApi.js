@@ -50,3 +50,31 @@ export async function fetchDetails({ mediaType, id, lang = "en-US" }) {
 
   return data;
 }
+
+export async function fetchTrailer({ mediaType, id, lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/videos?language=${lang}&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+  const trailers = data?.results
+    ?.filter(item => item.type.toLowerCase() === "trailer")
+    ?.sort((a, b) => a.size - b.size);
+
+  return trailers[trailers.length - 1] || null;
+}
+
+export async function fetchAgeRatings({ mediaType, id }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/${
+      mediaType === "movie" ? "release_dates" : "content_ratings"
+    }?api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+  return data.results;
+}
