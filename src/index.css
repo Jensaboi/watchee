@@ -15,7 +15,8 @@
   --color-text-400: #999999; /* tertiary text, hints */
   --color-text-500: #666666; /* less prominent info */
 
-  --spacing-xs: 4px;
+  --color-accent: oklch(90.5% 0.182 98.111);
+
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
@@ -36,7 +37,7 @@
     @apply text-text-200 text-base;
   }
   h1 {
-    @apply font-work-sans text-4xl text-text-100 tracking-tight leading-tight font-bold md:text-5xl lg:text-6xl;
+    @apply font-work-sans text-3xl text-text-100 tracking-tight leading-tight font-bold md:text-4xl lg:text-5xl;
   }
   h2 {
     @apply font-work-sans text-text-100;

@@ -16,19 +16,19 @@ export default function Header() {
   return (
     <header className="flex flex-row justify-between items-center p-xl h-[80px]">
       <Link>
-        <h1 className="text-2xl text-yellow-300">Watchee</h1>
+        <h1 className="text-2xl text-accent">Watchee</h1>
       </Link>
-      <div className="hidden md:block w-full max-w-[600px] mx-10">
+      <div className="hidden md:block mx-3xl w-full max-w-[600px]">
         <SearchAndResults />
       </div>
-      <div className="md:hidden relative z-10 flex-center gap-xs">
+      <div className="md:hidden relative flex-center gap-xs">
         <Button variant="icon" onClick={search.toggle}>
           <Search color="white" />
         </Button>
 
         <MobileSearchModal isOpen={search.isOpen} close={search.close} />
 
-        <Button variant="icon" onClick={nav.toggle}>
+        <Button className="z-2" variant="icon" onClick={nav.toggle}>
           <Hamburger isOpen={nav.isOpen} />
         </Button>
       </div>
