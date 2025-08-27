@@ -38,3 +38,15 @@ export async function fetchTmdbConfig() {
 
   return data;
 }
+
+export async function fetchDetails({ mediaType, id, lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}?language=${lang}&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data;
+}
