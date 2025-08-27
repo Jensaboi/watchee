@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchWithSearchQuery } from "../utility/tmdbApi";
+import { fetchWithSearchQuery } from "../lib/tmdbApi";
 
 export default function useDebouncedSearch(
   { initialQuery = "", initialMedia = "multi", lang = "en-US" },

@@ -1,7 +1,7 @@
 import useToggle from "../../hooks/useToggle";
 import { useRef, useEffect } from "react";
 
-export default function MenuDropdown({ children, ...rest }) {
+export default function Dropdown({ children, ...rest }) {
   const ref = useRef(null);
 
   const { isOpen, toggle, close, open } = useToggle();
