@@ -1,9 +1,9 @@
 import Modal from "./ui/Modal";
 import SearchAndResults from "./SearchAndResults";
-export default function MobileSearchModal({ ...rest }) {
+export default function MobileSearchModal({ close, isOpen }) {
   return (
-    <Modal {...rest}>
-      <SearchAndResults />
+    <Modal className="md:hidden" isOpen={isOpen}>
+      <SearchAndResults close={close} />
     </Modal>
   );
 }

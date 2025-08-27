@@ -8,8 +8,8 @@ export default function MenuDropdown({ children, ...rest }) {
 
   useEffect(() => {
     function handleClickOutside(e) {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setOpen(false);
+      if (ref.current && !ref.current.contains(e.target)) {
+        close();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -17,7 +17,7 @@ export default function MenuDropdown({ children, ...rest }) {
   }, []);
   return (
     <div ref={ref} className="relative" {...rest}>
-      {children(open, close, toggle, isOpen)}
+      {children({ isOpen, toggle, open, close })}
     </div>
   );
 }

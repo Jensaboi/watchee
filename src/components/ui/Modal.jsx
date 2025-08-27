@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
-export default function Modal({ isOpen = false, close, children }) {
+export default function Modal({
+  isOpen = false,
+  close,
+  children,
+  className = "",
+}) {
   useEffect(() => {
     function handleKeydown(e) {
       if (e.key === "escape") {
@@ -31,7 +36,11 @@ export default function Modal({ isOpen = false, close, children }) {
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="fixed inset-0 w-full h-full bg-black z-10">{children}</div>,
+    <div
+      className={`${className} fixed inset-0 w-full h-full bg-black/50 backdrop-blur-[2px] transistion-all z-10`}
+    >
+      {children}
+    </div>,
     document.body
   );
 }

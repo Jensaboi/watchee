@@ -7,23 +7,26 @@ import Hamburger from "./Hamburger";
 import Button from "./ui/Button";
 
 import { Search } from "lucide-react";
+import SearchAndResults from "./SearchAndResults";
 
 export default function Header() {
   const nav = useToggle();
   const search = useToggle();
 
   return (
-    <header className="flex flex-row justify-between items-center p-xl">
+    <header className="flex flex-row justify-between items-center p-xl h-[80px]">
       <Link>
         <h1 className="text-2xl text-yellow-300">Watchee</h1>
       </Link>
-
+      <div className="hidden md:block w-full max-w-[600px] mx-10">
+        <SearchAndResults />
+      </div>
       <div className="md:hidden relative z-10 flex-center gap-xs">
         <Button variant="icon" onClick={search.toggle}>
-          <Search style={{ color: "#ffffff" }} />
+          <Search color="white" />
         </Button>
 
-        <MobileSearchModal isOpen={search.isOpen} />
+        <MobileSearchModal isOpen={search.isOpen} close={search.close} />
 
         <Button variant="icon" onClick={nav.toggle}>
           <Hamburger isOpen={nav.isOpen} />

@@ -31,7 +31,8 @@
   }
   p,
   a,
-  button {
+  button,
+  input {
     @apply text-text-200 text-base;
   }
   h1 {
@@ -44,7 +45,8 @@
     @apply font-work-sans text-text-100;
   }
   button,
-  a {
+  a,
+  input {
     @apply hover:cursor-pointer;
   }
 }
