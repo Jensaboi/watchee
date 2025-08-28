@@ -34,8 +34,9 @@
   p,
   a,
   button,
-  input {
-    @apply text-text-200 text-base;
+  input,
+  span {
+    @apply font-popppins text-text-200 text-base;
   }
   h1 {
     @apply font-work-sans text-3xl text-text-100 tracking-tight leading-tight font-bold md:text-4xl lg:text-5xl;

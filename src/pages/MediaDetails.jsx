@@ -1,7 +1,12 @@
 import { fetchDetails, fetchTrailer, fetchAgeRatings } from "../lib/tmdbApi";
 import { fetchOmdb } from "../lib/omdbApi";
 
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import {
+  useLoaderData,
+  useNavigate,
+  useParams,
+  Outlet,
+} from "react-router-dom";
 import { useTMDBConfig } from "../context/ConfigContext";
 import { useGenres } from "../context/GenreContext";
 
@@ -17,6 +22,8 @@ import MediaTitle from "../components/MediaTitle";
 
 import { MoveLeft, Plus, Star } from "lucide-react";
 import MediaGenres from "../components/MediaGenres";
+import MediaOverview from "../components/MediaOverview";
+import MediaDetailsNav from "../components/MediaDetailsNav";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
@@ -57,7 +64,7 @@ export default function MediaDetails() {
       <div className="relative p-lg w-full h-full min-h-[86vh]">
         <Button
           onClick={() => navigate(-1)}
-          className="z-3 relative"
+          className="z-15 absolute"
           variant="icon"
         >
           <MoveLeft />
@@ -96,12 +103,14 @@ export default function MediaDetails() {
             to-bg-100/75 to-100%
             "
         ></div>
-        <section className="relative z-10 container mx-auto mt-1 flex flex-col items-center gap-xl">
+
+        <section className="relative z-10 container mx-auto my-2xl flex flex-col items-center gap-xl">
           <img
             alt={`${title}`}
             src={config?.posterBaseUrl?.[3] + media.poster_path}
-            className="object-cover object-center w-52 sm:w-60 rounded-md shadow-2xl border border-bg-300/20"
+            className="object-cover object-center w-48 sm:w-60 rounded-md shadow-2xl border border-bg-300/20"
           />
+
           <div className="flex flex-col gap-lg">
             <MediaTitle
               title={title}
@@ -114,15 +123,29 @@ export default function MediaDetails() {
               <Button variant="solid" size="md">
                 Play trailer
               </Button>
+
               <Button variant="icon">
                 <Plus />
               </Button>
+
               <Button variant="icon">
                 <Star />
               </Button>
             </div>
 
             <MediaGenres genres={media.genres} />
+            {mediaType === "movie" && (
+              <p className="text-center text-text-500">"{media.tagline}"</p>
+            )}
+
+            <MediaOverview overview={media.overview} />
+          </div>
+        </section>
+
+        <MediaDetailsNav />
+        <section className="container mx-auto my-2xl">
+          <div>
+            <Outlet />
           </div>
         </section>
       </div>

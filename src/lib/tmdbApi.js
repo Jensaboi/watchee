@@ -78,3 +78,15 @@ export async function fetchAgeRatings({ mediaType, id }) {
   const data = await response.json();
   return data.results;
 }
+
+export async function fetchCredits({ mediaType, id, lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/credits?language=${lang}&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data;
+}
