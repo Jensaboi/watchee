@@ -1,17 +1,22 @@
 import { fetchDetails, fetchTrailer, fetchAgeRatings } from "../lib/tmdbApi";
 import { fetchOmdb } from "../lib/omdbApi";
+
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useTMDBConfig } from "../context/ConfigContext";
+import { useGenres } from "../context/GenreContext";
+
 import {
   getYearStr,
   formatRunTimeStr,
   getGenres,
   getAgeRating,
 } from "../lib/utility";
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
-import { useTMDBConfig } from "../context/ConfigContext";
-import { useGenres } from "../context/GenreContext";
+
 import Button from "../components/ui/Button";
-import { MoveLeft, Plus, Star } from "lucide-react";
 import MediaTitle from "../components/MediaTitle";
+
+import { MoveLeft, Plus, Star } from "lucide-react";
+import MediaGenres from "../components/MediaGenres";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
@@ -20,6 +25,11 @@ export async function loader({ params }) {
     const media = await fetchDetails({ mediaType, id });
     const trailer = await fetchTrailer({ mediaType, id });
     const ageRatings = await fetchAgeRatings({ ...params });
+
+    if (mediaType === "movie") {
+      const omdb = await fetchOmdb(media.imdb_id);
+      return { media, trailer, ageRatings, omdb };
+    }
     return { media, trailer, ageRatings };
   } catch (error) {
   } finally {
@@ -33,10 +43,12 @@ export default function MediaDetails() {
   const { movieGenres, tvGenres } = useGenres();
   const navigate = useNavigate();
   const { mediaType, id } = useParams();
-  //console.log(config.backdropBaseUrl);
+
+  const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
+
   console.log("details", media);
-  console.log("trailer", trailer);
-  console.log("ratings", ageRatings);
+  //console.log("trailer", trailer);
+  //console.log("ratings", ageRatings);
 
   const title = media?.title || media?.name;
   const releaseDate = media?.release_date || media.first_air_date;
@@ -97,6 +109,7 @@ export default function MediaDetails() {
               runtime={formatRunTimeStr(media?.runtime)}
               ageRating={getAgeRating(mediaType, ageRatings)}
             />
+
             <div className="flex-center gap-sm">
               <Button variant="solid" size="md">
                 Play trailer
@@ -108,6 +121,8 @@ export default function MediaDetails() {
                 <Star />
               </Button>
             </div>
+
+            <MediaGenres genres={media.genres} />
           </div>
         </section>
       </div>

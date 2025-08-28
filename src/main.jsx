@@ -8,8 +8,8 @@ import Tv from "./pages/Tv.jsx";
 import MediaDetails, {
   loader as mediaDetailsLoader,
 } from "./pages/MediaDetails.jsx";
-import MediaCasts from "./components/MediaCasts.jsx";
-import MediaReviews from "./components/MediaReviews.jsx";
+import MediaCasts from "./pages/MediaCasts.jsx";
+import MediaReviews from "./pages/MediaReviews.jsx";
 import PersonDetails from "./pages/PersonDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 
