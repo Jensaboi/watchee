@@ -12,14 +12,14 @@ export async function loader({ params }) {
   return null;
 }
 
-export default function MediaDetailsWatch() {
-  const watchProviders = useLoaderData();
+export default function MediaWatchProviders() {
+  const watchProvidersPromise = useLoaderData();
 
   return (
     <Suspense fallback={<p>Loading providers...</p>}>
-      <Await resolve={watchProviders}>
-        {resolvedWatchProviders => {
-          const providers = resolvedWatchProviders["US"];
+      <Await resolve={watchProvidersPromise}>
+        {watchProviders => {
+          const providers = watchProviders["US"];
           console.log(providers);
           return (
             <div>

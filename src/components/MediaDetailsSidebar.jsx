@@ -8,6 +8,7 @@ export default function MediaDetailsSidebar({
   releaseDate,
   ended,
   ageRatingExplanation,
+  awards,
 }) {
   return (
     <div className="w-full md:max-w-[300px] px-lg py-3xl bg-bg-300 rounded-md flex flex-col gap-xl shrink-0">
@@ -56,6 +57,7 @@ export default function MediaDetailsSidebar({
         <h3 className="mb-1">{ageRating}</h3>
         <p>{ageRatingExplanation}</p>
       </div>
+      {awards}
     </div>
   );
 }

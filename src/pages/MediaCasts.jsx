@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { fetchCredits } from "../lib/tmdbApi";
 import { Await, useLoaderData } from "react-router-dom";
 import { getMovieDirector, getStoryCreators, getWriters } from "../lib/utility";
+
 export async function loader({ params }) {
   const { mediaType, id } = params;
   try {
@@ -15,22 +16,22 @@ export async function loader({ params }) {
 }
 
 export default function MediaCasts() {
-  const credits = useLoaderData();
+  const creditsPromise = useLoaderData();
 
   return (
     <Suspense fallback={<p>Loading Credits...</p>}>
-      <Await resolve={credits}>
-        {resolvedCredits => {
-          const casts = resolvedCredits.cast;
-          const crew = resolvedCredits.crew;
+      <Await resolve={creditsPromise}>
+        {credits => {
+          const casts = credits.cast;
+          const crew = credits.crew;
           const director = getMovieDirector(crew);
           const writers = getWriters(crew);
           const storyCreators = getStoryCreators(crew);
           const stars = casts.slice(0, 3);
-          console.log(stars);
-          console.log("story", storyCreators);
-          console.log("writ", writers);
-          console.log("resolved", resolvedCredits);
+          //console.log(stars);
+          //console.log("story", storyCreators);
+          //console.log("writ", writers);
+
           return (
             <div>
               <div>

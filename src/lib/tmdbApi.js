@@ -169,3 +169,15 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
 
   return data.results;
 }
+
+export async function fetchReviews({ mediaType, id, lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/reviews?language=${lang}&page=1&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}

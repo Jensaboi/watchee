@@ -13,13 +13,15 @@ import MediaDetails, {
 } from "./pages/MediaDetails.jsx";
 
 import MediaCasts, { loader as mediaCastsLoader } from "./pages/MediaCasts.jsx";
-import MediaReviews from "./pages/MediaReviews.jsx";
+import MediaReviews, {
+  loader as mediaReviewsLoader,
+} from "./pages/MediaReviews.jsx";
 import PersonDetails from "./pages/PersonDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Discover from "./pages/Discover.jsx";
-import MediaDetailsWatch, {
-  loader as mediaDetailsWatchLoader,
-} from "./pages/MediaDetailsWatch.jsx";
+import MediaWatchProviders, {
+  loader as mediaWatchProvidersLoader,
+} from "./pages/MediaWatchProviders.jsx";
 
 const rotuer = createBrowserRouter([
   {
@@ -41,10 +43,14 @@ const rotuer = createBrowserRouter([
               { index: true, Component: MediaCasts, loader: mediaCastsLoader },
               {
                 path: "watch",
-                Component: MediaDetailsWatch,
-                loader: mediaDetailsWatchLoader,
+                Component: MediaWatchProviders,
+                loader: mediaWatchProvidersLoader,
               },
-              { path: "reviews", Component: MediaReviews },
+              {
+                path: "reviews",
+                Component: MediaReviews,
+                loader: mediaReviewsLoader,
+              },
             ],
           },
           { path: "person/:id", Component: PersonDetails },

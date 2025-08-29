@@ -125,9 +125,9 @@ export default function MediaDetails() {
             {omdb && (
               <Suspense fallback={<MediaDetailsRatingsFallback />}>
                 <Await resolve={omdb}>
-                  {loadedRatings => (
+                  {resolvedOmdb => (
                     <MediaDetailsRatings
-                      data={loadedRatings}
+                      data={resolvedOmdb}
                       tmdbRating={media.vote_average.toFixed(1)}
                     />
                   )}
@@ -136,6 +136,7 @@ export default function MediaDetails() {
             )}
 
             <MediaGenres genres={media.genres} />
+
             {media?.tagline && (
               <p className="text-center text-text-500">"{media.tagline}"</p>
             )}
@@ -169,6 +170,20 @@ export default function MediaDetails() {
               getAgeRatingExplanation(ageRating, ageRatingExplanations).short
             }
             spokenLanguages={media.spoken_languages}
+            awards={
+              omdb && (
+                <Suspense fallback={<p>loading awards...</p>}>
+                  <Await resolve={omdb}>
+                    {resolvedOmdb => (
+                      <div>
+                        <h3>Awards</h3>
+                        <p>{resolvedOmdb.awards || "Unknown"}</p>
+                      </div>
+                    )}
+                  </Await>
+                </Suspense>
+              )
+            }
           />
         </section>
       </div>

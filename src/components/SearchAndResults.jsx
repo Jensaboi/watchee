@@ -13,8 +13,6 @@ export default function SearchAndResults({ closeModal }) {
 
   const { config } = useTMDBConfig();
 
-  const { movieGenres, tvGenres } = useGenres();
-
   function closeSearch() {
     closeModal();
     setQuery("");

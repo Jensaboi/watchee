@@ -19,7 +19,6 @@ export default function Home() {
     error: upcomingMoviesError,
   } = useApi(fetchUpcoming, { mediaType: "movie" });
 
-  console.log(popularMovies);
   return (
     <>
       <section className="container mx-auto mt-25 p-xl ">
