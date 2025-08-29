@@ -36,3 +36,22 @@ export function formatRunTimeStr(runtimeMins) {
   const min = runtimeMins % 60;
   return `${hr}h ${min}m`;
 }
+
+export function getLanguageName(langArr, lang) {
+  const langObj = langArr?.find(
+    item => item?.iso_639_1?.toLowerCase() === lang?.toLowerCase()
+  );
+  return langObj?.english_name || null;
+}
+
+export function getAgeRatingExplanation(rating, countryCode = "US", obj) {
+  const explanationsArr = obj[countryCode];
+  const certObj = explanationsArr?.find(
+    item => item.certification.toLowerCase() === rating?.toLowerCase()
+  );
+
+  return {
+    short: certObj?.meaning?.split(". ")?.[0] || null,
+    long: certObj?.meaning || null,
+  };
+}

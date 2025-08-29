@@ -90,3 +90,15 @@ export async function fetchCredits({ mediaType, id, lang = "en-US" }) {
 
   return data;
 }
+
+export async function fetchAgeRatingExplanation({ mediaType }) {
+  const response = await fetch(
+    `${BASE_URL}/certification/${mediaType}/list?api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.certifications;
+}

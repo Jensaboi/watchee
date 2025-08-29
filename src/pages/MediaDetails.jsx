@@ -14,6 +14,7 @@ import {
   formatRunTimeStr,
   getGenres,
   getAgeRating,
+  getLanguageName,
 } from "../lib/utility";
 import Button from "../components/ui/Button";
 import MediaTitle from "../components/MediaTitle";
@@ -58,7 +59,8 @@ export default function MediaDetails() {
   console.log("details", media);
   //console.log("trailer", trailer);
   //console.log("ratings", ageRatings);
-  console.log("omdb", omdb);
+  //console.log("omdb", omdb);
+
   const title = media?.title || media?.name;
   const releaseDate = media?.release_date || media.first_air_date;
   return (
@@ -87,7 +89,7 @@ export default function MediaDetails() {
           <img
             alt={`${title}`}
             src={config?.posterBaseUrl?.[3] + media.poster_path}
-            className="object-cover object-center w-48 sm:w-60 md:w-64 lg:w-68 rounded-md shadow-2xl border border-bg-300/20"
+            className="object-cover object-center w-48 sm:w-60 md:w-74 lg:w-80 xl:w-86 rounded-md shadow-2xl border border-bg-300/20"
           />
 
           <div className="flex flex-col gap-lg md:justify-start md:items-start">
@@ -139,7 +141,18 @@ export default function MediaDetails() {
             <MediaDetailsNav />
             <Outlet />
           </div>
-          <MediaDetailsSidebar />
+          <MediaDetailsSidebar
+            budget={media.budget}
+            revenue={media.revenue}
+            OriginalLanguage={getLanguageName(
+              media.spoken_languages,
+              media.original_language
+            )}
+            releaseDate={releaseDate}
+            status={media.status}
+            ageRating={getAgeRating(mediaType, ageRatings)}
+            spokenLanguages={media.spoken_languages}
+          />
         </section>
       </div>
     </>

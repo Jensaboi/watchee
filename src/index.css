@@ -35,7 +35,8 @@
   a,
   button,
   input,
-  span {
+  span,
+  li {
     @apply font-popppins text-text-200 text-base;
   }
   h1 {

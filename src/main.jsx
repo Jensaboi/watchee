@@ -41,7 +41,7 @@ const rotuer = createBrowserRouter([
               { path: "reviews", Component: MediaReviews },
             ],
           },
-          { path: "person", Component: PersonDetails },
+          { path: "person/:id", Component: PersonDetails },
           { path: "*", Component: NotFound },
         ],
       },
