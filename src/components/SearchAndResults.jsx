@@ -1,11 +1,11 @@
-import Button from "./ui/Button";
-import Dropdown from "./ui/Dropdown";
 import useDebouncedSearch from "../hooks/useDebouncedSearch";
 import { useTMDBConfig } from "../context/ConfigContext";
 import { useGenres } from "../context/GenreContext";
 import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "react-router-dom";
 import { getYearStr } from "../lib/utility";
+import Button from "./ui/Button";
+import Dropdown from "./ui/Dropdown";
 
 export default function SearchAndResults({ closeModal }) {
   const { query, setQuery, media, setMedia, loading, data, error } =
@@ -28,26 +28,12 @@ export default function SearchAndResults({ closeModal }) {
             onClick={open}
             className="flex items-center gap-xs md:px-0 px-xs w-full bg-bg-100 h-[80px] md:h-fit hover:cursor-pointer"
           >
-            <div
-              className="relative 
-            flex items-center 
-            justify-between 
-            w-full             
-            focus:outline-none 
-            focus-within:ring-2 
-            focus-within:ring-bg-500
-            transition rounded-full"
-            >
+            <div className="relative flex items-center justify-between w-full focus:outline-none focus-within:ring-2 focus-within:ring-bg-500 transition rounded-full">
               <Dropdown className="relative">
                 {({ isOpen, toggle, open, close }) => (
                   <>
                     <button
-                      className="
-                      bg-bg-300
-                      text-text-400
-                        pl-5 pr-3 py-3 
-                        rounded-l-full
-                        flex-center gap-1"
+                      className="bg-bg-300 text-text-400 pl-5 pr-3 py-3 rounded-l-full flex-center gap-1"
                       onClick={toggle}
                     >
                       All
@@ -58,19 +44,7 @@ export default function SearchAndResults({ closeModal }) {
                       )}
                     </button>
                     {isOpen && (
-                      <ul
-                        className="absolute 
-                            top-1/1
-                            mt-[2px]
-                            left-1
-                            bg-bg-400
-                            w-45
-                            py-sm
-                            rounded-sm
-                            z-20
-                            border-bg-bg-500
-                            "
-                      >
+                      <ul className="absolute top-1/1 mt-[2px] left-1 bg-bg-400 w-45 py-sm rounded-sm z-80 border-bg-bg-500">
                         <li className="p-md text-text-100 hover:bg-bg-500 cursor-pointer">
                           All
                         </li>
@@ -93,17 +67,7 @@ export default function SearchAndResults({ closeModal }) {
                 placeholder="Search..."
                 value={query}
                 onChange={e => setQuery(e.currentTarget.value)}
-                className="
-                    flex-1
-                    w-full rounded-r-full 
-                    bg-bg-300
-                    text-base
-                    text-color-text-100
-                    placeholder-text-400
-                    px-3 py-3 
-                    pr-12
-                    outline-none focus:outline-none
-                    "
+                className="flex-1 w-full rounded-r-full bg-bg-300 text-base text-color-text-100 placeholder-text-400 px-3 py-3 pr-12 outline-none focus:outline-none"
               />
               <Search className="absolute top-3 right-3 text-text-400" />
             </div>
@@ -112,22 +76,7 @@ export default function SearchAndResults({ closeModal }) {
             </Button>
           </div>
           {data[0] && isOpen && (
-            <ul
-              className="absolute 
-            top-1/1 
-            left-0 
-            rounded-md 
-            text-text-100 
-            bg-bg-100 
-            w-full 
-            py-2 
-            max-h-[90vh] 
-            overflow-y-scroll
-            md:max-h-[80vh]
-            md:bg-bg-300
-            md:mt-[4px] 
-            "
-            >
+            <ul className="absolute z-60 top-1/1 left-0 rounded-md text-text-100 bg-bg-100 w-full py-2 max-h-[90vh] overflow-y-scroll md:max-h-[80vh]md:bg-bg-300 md:mt-[4px]">
               {data.map(item => {
                 const releaseDate = item?.release_date || item?.first_air_date;
                 const path = item?.poster_path || item?.profile_path;

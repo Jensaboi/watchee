@@ -1,0 +1,46 @@
+export default function MediaDetailsSidebar({
+  status,
+  OriginalLanguage,
+  spokenLanguages,
+  budget,
+  revenue,
+  ageRating,
+  ageRatingExplanation,
+}) {
+  return (
+    <div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+      <div>
+        <h3></h3>
+        <p></p>
+      </div>
+    </div>
+  );
+}

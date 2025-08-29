@@ -1,9 +1,10 @@
+import { Suspense } from "react";
 import { fetchCredits } from "../lib/tmdbApi";
-import { useLoaderData } from "react-router-dom";
+import { Await, useLoaderData } from "react-router-dom";
 export async function loader({ params }) {
   const { mediaType, id } = params;
   try {
-    const credits = await fetchCredits({ mediaType, id });
+    const credits = fetchCredits({ mediaType, id });
 
     return credits;
   } catch (error) {
@@ -15,8 +16,12 @@ export async function loader({ params }) {
 export default function MediaCasts() {
   const credits = useLoaderData();
   return (
-    <div>
-      <h2>Casts and Crew</h2>
-    </div>
+    <Suspense fallback={<p>Loading Credits...</p>}>
+      <Await resolve={credits}>
+        {resolvedCredits => {
+          return <div>text</div>;
+        }}
+      </Await>
+    </Suspense>
   );
 }
