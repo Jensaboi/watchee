@@ -59,11 +59,12 @@ export default function MediaDetails() {
     useAgeExplanations();
   const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
 
-  console.log("details", media);
+  //console.log("details", media);
   //console.log("trailer", trailer);
   //console.log("ratings", ageRatings);
   //console.log("omdb", omdb);
-  console.log(movieRatingExplanations);
+  //console.log(movieRatingExplanations);
+
   let ageRatingExplanations =
     mediaType === "movie" ? movieRatingExplanations : tvRatingExplanations;
 
@@ -149,7 +150,7 @@ export default function MediaDetails() {
         "
         >
           <div className="flex-1">
-            <MediaDetailsNav />
+            <MediaDetailsNav className="mb-10" />
             <Outlet />
           </div>
 
@@ -165,8 +166,7 @@ export default function MediaDetails() {
             status={media.status}
             ageRating={getAgeRating(mediaType, ageRatings)}
             ageRatingExplanation={
-              getAgeRatingExplanation(ageRating, "US", ageRatingExplanations)
-                .short
+              getAgeRatingExplanation(ageRating, ageRatingExplanations).short
             }
             spokenLanguages={media.spoken_languages}
           />

@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 
-export default function MediaDetailsNav() {
+export default function MediaDetailsNav({ className }) {
   return (
-    <nav className="mx-auto">
+    <nav className={`${className} `}>
       <ul className="flex flex-row gap-md">
         <li>
           <NavLink

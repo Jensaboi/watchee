@@ -32,7 +32,7 @@ export default function Header() {
           <Hamburger isOpen={nav.isOpen} />
         </Button>
       </div>
-      <PrimaryNav isOpen={nav.isOpen} />
+      <PrimaryNav close={nav.close} isOpen={nav.isOpen} />
     </header>
   );
 }

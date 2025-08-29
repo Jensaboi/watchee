@@ -33,7 +33,7 @@ export default function MediaDetailsSidebar({
         <h3 className="mb-1">Spoken languages</h3>
         <ul className="flex flex-row gap-xs">
           {spokenLanguages.map((item, i) => (
-            <li key={item.id} className="font-light">
+            <li key={i} className="font-light">
               {item.english_name}
               {i < spokenLanguages.length - 1 ? "," : ""}
             </li>

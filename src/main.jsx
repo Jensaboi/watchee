@@ -17,7 +17,9 @@ import MediaReviews from "./pages/MediaReviews.jsx";
 import PersonDetails from "./pages/PersonDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
 import Discover from "./pages/Discover.jsx";
-import MediaDetailsWatch from "./pages/MediaDetailsWatch.jsx";
+import MediaDetailsWatch, {
+  loader as mediaDetailsWatchLoader,
+} from "./pages/MediaDetailsWatch.jsx";
 
 const rotuer = createBrowserRouter([
   {
@@ -37,7 +39,11 @@ const rotuer = createBrowserRouter([
             loader: mediaDetailsLoader,
             children: [
               { index: true, Component: MediaCasts, loader: mediaCastsLoader },
-              { path: "watch", Component: MediaDetailsWatch },
+              {
+                path: "watch",
+                Component: MediaDetailsWatch,
+                loader: mediaDetailsWatchLoader,
+              },
               { path: "reviews", Component: MediaReviews },
             ],
           },

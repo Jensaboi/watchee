@@ -91,6 +91,18 @@ export async function fetchCredits({ mediaType, id, lang = "en-US" }) {
   return data;
 }
 
+export async function fetchWatchProviders({ mediaType, id }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/watch/providers?&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
 export async function fetchAgeRatingExplanation({ mediaType }) {
   const response = await fetch(
     `${BASE_URL}/certification/${mediaType}/list?api_key=${API_KEY}`
@@ -101,4 +113,59 @@ export async function fetchAgeRatingExplanation({ mediaType }) {
   const data = await response.json();
 
   return data.certifications;
+}
+
+export async function fetchNowPlaying(
+  { mediaType, region = "us", lang = "en-US" },
+  signal
+) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/now_playing?language=${lang}&page=1&region=${region}&api_key=${API_KEY}`,
+    { signal }
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function fetchPopular({ mediaType, lang = "en-US" }, signal) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/popular?language=${lang}&page=1&api_key=${API_KEY}`,
+    { signal }
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function fetchTopRated({ mediaType, lang = "en-US" }, signal) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/top_rated?language=${lang}&page=1&api_key=${API_KEY}`,
+    { signal }
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/upcoming?language=${lang}&page=1&api_key=${API_KEY}`,
+    { signal }
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
 }

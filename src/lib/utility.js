@@ -44,7 +44,7 @@ export function getLanguageName(langArr, lang) {
   return langObj?.english_name || null;
 }
 
-export function getAgeRatingExplanation(rating, countryCode = "US", obj) {
+export function getAgeRatingExplanation(rating, obj, countryCode = "US") {
   const explanationsArr = obj[countryCode];
   const certObj = explanationsArr?.find(
     item => item.certification.toLowerCase() === rating?.toLowerCase()
@@ -54,4 +54,16 @@ export function getAgeRatingExplanation(rating, countryCode = "US", obj) {
     short: certObj?.meaning?.split(". ")?.[0] || null,
     long: certObj?.meaning || null,
   };
+}
+
+export function getMovieDirector(arr) {
+  return arr.find(item => item.job.toLowerCase() === "director") || "Unknown";
+}
+
+export function getWriters(arr) {
+  return arr.filter(item => item.job.toLowerCase() === "screenplay");
+}
+
+export function getStoryCreators(arr) {
+  return arr.filter(item => item.job.toLowerCase() === "story");
 }
