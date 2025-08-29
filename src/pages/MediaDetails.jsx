@@ -15,6 +15,7 @@ import {
   getGenres,
   getAgeRating,
   getLanguageName,
+  getAgeRatingExplanation,
 } from "../lib/utility";
 import Button from "../components/ui/Button";
 import MediaTitle from "../components/MediaTitle";
@@ -27,6 +28,7 @@ import MediaDetailsRatings, {
 } from "../components/MediaDetailsRatings";
 import MediaDetailsSidebar from "../components/MediaDetailsSidebar";
 import { Suspense } from "react";
+import { useAgeExplanations } from "../context/AgeRatingExplanationsContext";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
@@ -53,16 +55,21 @@ export default function MediaDetails() {
   const { movieGenres, tvGenres } = useGenres();
   const navigate = useNavigate();
   const { mediaType } = useParams();
-
+  const { movieRatingExplanations, tvRatingExplanations } =
+    useAgeExplanations();
   const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
 
   console.log("details", media);
   //console.log("trailer", trailer);
   //console.log("ratings", ageRatings);
   //console.log("omdb", omdb);
+  console.log(movieRatingExplanations);
+  let ageRatingExplanations =
+    mediaType === "movie" ? movieRatingExplanations : tvRatingExplanations;
 
   const title = media?.title || media?.name;
   const releaseDate = media?.release_date || media.first_air_date;
+  const ageRating = getAgeRating(mediaType, ageRatings);
   return (
     <>
       <div className="relative p-lg w-full h-full min-h-[86vh]">
@@ -97,7 +104,7 @@ export default function MediaDetails() {
               title={title}
               year={getYearStr(releaseDate)}
               runtime={formatRunTimeStr(media?.runtime)}
-              ageRating={getAgeRating(mediaType, ageRatings)}
+              ageRating={ageRating}
             />
 
             <div className="flex-center gap-sm">
@@ -136,11 +143,16 @@ export default function MediaDetails() {
           </div>
         </section>
 
-        <section className="relative z-10 container mx-auto my-10">
-          <div className="">
+        <section
+          className="relative z-10 container mx-auto my-10 flex flex-col
+                            md:flex-row
+        "
+        >
+          <div className="flex-1">
             <MediaDetailsNav />
             <Outlet />
           </div>
+
           <MediaDetailsSidebar
             budget={media.budget}
             revenue={media.revenue}
@@ -149,8 +161,13 @@ export default function MediaDetails() {
               media.original_language
             )}
             releaseDate={releaseDate}
+            ended={media?.last_air_date}
             status={media.status}
             ageRating={getAgeRating(mediaType, ageRatings)}
+            ageRatingExplanation={
+              getAgeRatingExplanation(ageRating, "US", ageRatingExplanations)
+                .short
+            }
             spokenLanguages={media.spoken_languages}
           />
         </section>
