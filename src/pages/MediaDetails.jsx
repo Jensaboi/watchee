@@ -150,7 +150,7 @@ export default function MediaDetails() {
                             md:flex-row
         "
         >
-          <div className="flex-1">
+          <div className="flex-1 min-w-0 pt-5">
             <MediaDetailsNav className="mb-10" />
             <Outlet />
           </div>

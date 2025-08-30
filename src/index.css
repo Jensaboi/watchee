@@ -46,7 +46,7 @@
     @apply font-work-sans text-2xl md:text-3xl lg:text-4xl text-text-100 tracking-tight leading-tight font-bold;
   }
   h3 {
-    @apply font-work-sans text-xl text-text-100 tracking-tight leading-tight font-semibold;
+    @apply font-work-sans text-xl text-text-100 font-semibold;
   }
   button,
   a,

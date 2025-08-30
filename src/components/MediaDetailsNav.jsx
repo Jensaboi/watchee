@@ -14,7 +14,7 @@ export default function MediaDetailsNav({ className }) {
             to=""
             end
           >
-            Credits
+            Cast & Crew
           </NavLink>
         </li>
         <li>
@@ -27,7 +27,7 @@ export default function MediaDetailsNav({ className }) {
             to="watch"
             end
           >
-            Watch
+            Watch at
           </NavLink>
         </li>
         <li>

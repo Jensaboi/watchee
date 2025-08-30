@@ -1,8 +1,10 @@
 import { Suspense } from "react";
 import { fetchCredits } from "../lib/tmdbApi";
-import { Await, useLoaderData } from "react-router-dom";
+import { Await, Link, useLoaderData } from "react-router-dom";
 import { getMovieDirector, getStoryCreators, getWriters } from "../lib/utility";
-
+import PersonCard from "../components/PersonCard";
+import { useTMDBConfig } from "../context/ConfigContext";
+import imgPlaceHolder from "../assets/placeholder.png";
 export async function loader({ params }) {
   const { mediaType, id } = params;
   try {
@@ -17,7 +19,11 @@ export async function loader({ params }) {
 
 export default function MediaCasts() {
   const creditsPromise = useLoaderData();
-
+  const { config, loading } = useTMDBConfig();
+  console.log(loading);
+  if (loading) {
+    return <p>loading....</p>;
+  }
   return (
     <Suspense fallback={<p>Loading Credits...</p>}>
       <Await resolve={creditsPromise}>
@@ -31,7 +37,7 @@ export default function MediaCasts() {
           //console.log(stars);
           //console.log("story", storyCreators);
           //console.log("writ", writers);
-
+          console.log(config?.profileBaseUrl);
           return (
             <div>
               <div>
@@ -53,6 +59,24 @@ export default function MediaCasts() {
                 <ul>
                   {stars.map(item => (
                     <li key={item.id}>{item.name}</li>
+                  ))}
+                </ul>
+
+                <ul className="flex w-full gap-xl overflow-hidden overflow-x-scroll">
+                  {casts.map(item => (
+                    <li key={item.id}>
+                      <Link to={`/person/${item.id}`}>
+                        <PersonCard
+                          imgUrl={
+                            config
+                              ? config?.profileBaseUrl?.[1] + item.profile_path
+                              : imgPlaceHolder
+                          }
+                          name={item.name}
+                          knownFor={item.known_for_department}
+                        />
+                      </Link>
+                    </li>
                   ))}
                 </ul>
               </div>
