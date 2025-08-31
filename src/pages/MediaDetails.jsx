@@ -147,7 +147,7 @@ export default function MediaDetails() {
 
         <section
           className="relative z-10 container mx-auto my-10 flex flex-col
-                            md:flex-row
+                            md:flex-row gap-10
         "
         >
           <div className="flex-1 min-w-0 pt-5">
