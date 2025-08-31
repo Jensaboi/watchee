@@ -39,7 +39,7 @@ export default function MediaWatchProviders() {
           const providers = filter
             ? modifiedProviders.filter(item => item.type === filter)
             : modifiedProviders;
-          console.log(providers);
+
           return (
             <div>
               <nav>
