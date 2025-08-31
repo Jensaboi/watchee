@@ -59,7 +59,7 @@ export default function MediaDetails() {
     useAgeExplanations();
   const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
 
-  //console.log("details", media);
+  console.log("details", media);
   //console.log("trailer", trailer);
   //console.log("ratings", ageRatings);
   //console.log("omdb", omdb);
@@ -81,12 +81,15 @@ export default function MediaDetails() {
         >
           <MoveLeft />
         </Button>
+
         {/* backdrop img */}
-        <img
-          alt=""
-          src={config?.backdropBaseUrl?.[3] + media.backdrop_path}
-          className="pointer-events-none absolute z-0 top-0 left-0 w-full h-full object-center object-cover max-h-[580px]"
-        />
+        {media.backdrop_path && (
+          <img
+            alt=""
+            src={config?.backdropBaseUrl?.[3] + media.backdrop_path}
+            className="pointer-events-none absolute z-0 top-0 left-0 w-full h-full object-center object-cover max-h-[580px]"
+          />
+        )}
         {/* backdrop overlay */}
         <div className="absolute pointer-events-none z-1 top-0 left-0 w-full h-full max-h-[580px] bg-gradient-to-t from-bg-100 from-20% via-bg-100/85 via-50% to-bg-100/75 to-100%"></div>
 
@@ -97,7 +100,7 @@ export default function MediaDetails() {
           <img
             alt={`${title}`}
             src={config?.posterBaseUrl?.[3] + media.poster_path}
-            className="object-cover object-center w-48 sm:w-60 md:w-74 lg:w-80 xl:w-86 rounded-md shadow-2xl border border-bg-300/20"
+            className="object-cover object-center w-48 sm:w-60 md:w-74 lg:w-80 aspect-7/10 max-h-112 xl:w-86 rounded-md shadow-2xl border border-bg-300/20"
           />
 
           <div className="flex flex-col gap-lg md:justify-start md:items-start">
@@ -152,7 +155,7 @@ export default function MediaDetails() {
         >
           <div className="flex-1 min-w-0 pt-5">
             <MediaDetailsNav className="mb-10" />
-            <Outlet />
+            <Outlet context={media} />
           </div>
 
           <MediaDetailsSidebar

@@ -4,18 +4,26 @@ import rottenTomatoLogo from "../assets/rotten-tomato-logo.png";
 export default function MediaDetailsRatings({ data, tmdbRating }) {
   return (
     <ul className="flex flex-row items-center justify-center gap-md">
-      <li className="flex flex-row gap-sm">
-        <img className="h-5" src={tmdbLogo} />
-        <span>{tmdbRating}</span>
-      </li>
-      <li className="flex flex-row gap-sm">
-        <img className="h-5" src={imdbLogo} />
-        <span>{data.imdbRating}</span>
-      </li>
-      <li className="flex flex-row gap-sm">
-        <img className="h-5" src={rottenTomatoLogo} />
-        <span>{data.rottenTomatoRating}</span>
-      </li>
+      {tmdbRating && (
+        <li className="flex flex-row gap-sm">
+          <img className="h-5" src={tmdbLogo} />
+          <span>{tmdbRating}</span>
+        </li>
+      )}
+
+      {data.imdbRating && (
+        <li className="flex flex-row gap-sm">
+          <img className="h-5" src={imdbLogo} />
+          <span>{data.imdbRating}</span>
+        </li>
+      )}
+
+      {data.rottenTomatoRating && (
+        <li className="flex flex-row gap-sm">
+          <img className="h-5" src={rottenTomatoLogo} />
+          <span>{data.rottenTomatoRating}</span>
+        </li>
+      )}
     </ul>
   );
 }

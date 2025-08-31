@@ -57,7 +57,7 @@ export function getAgeRatingExplanation(rating, obj, countryCode = "US") {
 }
 
 export function getMovieDirector(arr) {
-  return arr.find(item => item.job.toLowerCase() === "director") || "Unknown";
+  return arr.find(item => item.job.toLowerCase() === "director") || null;
 }
 
 export function getWriters(arr) {

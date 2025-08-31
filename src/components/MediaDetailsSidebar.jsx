@@ -11,7 +11,7 @@ export default function MediaDetailsSidebar({
   awards,
 }) {
   return (
-    <div className="w-full md:max-w-[300px] px-lg py-3xl bg-bg-300 rounded-md flex flex-col gap-xl shrink-0">
+    <aside className="w-full md:max-w-[300px] px-lg py-3xl bg-bg-300 rounded-md flex flex-col gap-xl shrink-0">
       <div>
         <h3 className="mb-1">Status</h3>
         <p className="font-light">{status}</p>
@@ -58,6 +58,6 @@ export default function MediaDetailsSidebar({
         <p>{ageRatingExplanation}</p>
       </div>
       {awards}
-    </div>
+    </aside>
   );
 }

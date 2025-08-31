@@ -11,8 +11,12 @@ export default function PersonCard({
         alt={`${name}`}
         src={imgUrl}
       />
-      <h3 className="truncate font-normal">{name}</h3>
-      <p className="text-sm text-text-300">{knownFor || character}</p>
+      <div>
+        <h3 className="truncate font-normal">{name}</h3>
+        <p className="text-start text-sm text-text-300">
+          {knownFor || character}
+        </p>
+      </div>
     </article>
   );
 }

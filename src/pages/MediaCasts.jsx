@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { fetchCredits } from "../lib/tmdbApi";
-import { Await, Link, useLoaderData } from "react-router-dom";
+import { Await, Link, useLoaderData, useOutletContext } from "react-router-dom";
 import { getMovieDirector, getStoryCreators, getWriters } from "../lib/utility";
 import { useTMDBConfig } from "../context/ConfigContext";
 import imgPlaceHolder from "../assets/placeholder.png";
@@ -23,11 +23,9 @@ export async function loader({ params }) {
 
 export default function MediaCasts() {
   const creditsPromise = useLoaderData();
-  const { config, loading } = useTMDBConfig();
-  console.log(loading);
-  if (loading) {
-    return <p>loading....</p>;
-  }
+  const { config } = useTMDBConfig();
+  const media = useOutletContext();
+
   return (
     <Suspense fallback={<p>Loading Credits...</p>}>
       <Await resolve={creditsPromise}>
@@ -38,74 +36,111 @@ export default function MediaCasts() {
           const writers = getWriters(crew);
           const storyCreators = getStoryCreators(crew);
           const stars = casts.slice(0, 3);
-          //console.log(stars);
-          //console.log("story", storyCreators);
-          //console.log("writ", writers);
-          console.log(config?.profileBaseUrl);
+          const creators = media?.created_by;
+
           return (
             <div className="flex flex-col gap-15">
               <div className="flex flex-col gap-2xl">
-                <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
-                  <h3>Director</h3>
-                  <Link
-                    to={`/person/${director.id}`}
-                    key={director.id}
-                    className={`text-blue-400 font-normal`}
-                  >
-                    {director.name}
-                  </Link>
-                </div>
-                <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
-                  <h3>Writers</h3>
-                  <ul className="flex flex-wrap gap-md items-center">
-                    {writers.map((item, i) => (
-                      <>
-                        {i > 0 && <Badge variant="dot" />}
-                        <Link
-                          to={`/person/${item.id}`}
+                {director && (
+                  <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
+                    <h3>Director</h3>
+                    <Link
+                      to={`/person/${director.id}`}
+                      key={director.id}
+                      className={`text-blue-400 font-normal`}
+                    >
+                      {director.name}
+                    </Link>
+                  </div>
+                )}
+
+                {creators?.[0] && (
+                  <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
+                    <h3>{creators.length > 1 ? "Creators" : "Creator"}</h3>
+                    <ul className="flex flex-wrap gap-sm items-center">
+                      {creators.map((item, i) => (
+                        <li
+                          className="flex flex-row gap-sm items-center"
                           key={item.id}
-                          className={`text-blue-400 font-normal`}
                         >
-                          {item.name}
-                        </Link>
-                      </>
-                    ))}
-                  </ul>
-                </div>
-                <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
-                  <h3>Story by</h3>
-                  <ul className="flex flex-wrap gap-md items-center">
-                    {storyCreators.map((item, i) => (
-                      <>
-                        {i > 0 && <Badge variant="dot" />}
-                        <Link
-                          to={`/person/${item.id}`}
+                          {i > 0 && <Badge variant="dot" />}
+                          <Link
+                            to={`/person/${item.id}`}
+                            className={`text-blue-400 font-normal`}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {writers[0] && (
+                  <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
+                    <h3>Writers</h3>
+                    <ul className="flex flex-wrap gap-sm items-center">
+                      {writers.map((item, i) => (
+                        <li
+                          className="flex flex-row gap-sm items-center"
                           key={item.id}
-                          className={`text-blue-400 font-normal`}
                         >
-                          {item.name}
-                        </Link>
-                      </>
-                    ))}
-                  </ul>
-                </div>
-                <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
-                  <h3>Stars</h3>
-                  <ul className="flex flex-wrap gap-md items-center">
-                    {stars.map((item, i) => (
-                      <>
-                        {i > 0 && <Badge variant="dot" />}
-                        <Link
-                          to={`/person/${item.id}`}
+                          {i > 0 && <Badge variant="dot" />}
+                          <Link
+                            to={`/person/${item.id}`}
+                            className="text-blue-400 font-normal"
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {storyCreators[0] && (
+                  <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
+                    <h3>Story by</h3>
+                    <ul className="flex flex-wrap gap-sm items-center">
+                      {storyCreators.map((item, i) => (
+                        <li
+                          className="flex flex-row gap-sm items-center"
                           key={item.id}
-                          className={`text-blue-400 font-normal`}
                         >
-                          {item.name}
-                        </Link>
-                      </>
-                    ))}
-                  </ul>
-                </div>
+                          {i > 0 && <Badge variant="dot" />}
+                          <Link
+                            to={`/person/${item.id}`}
+                            className={`text-blue-400 font-normal`}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {stars[0] && (
+                  <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
+                    <h3>Stars</h3>
+                    <ul className="flex flex-wrap gap-sm items-center">
+                      {stars.map((item, i) => (
+                        <li
+                          className="flex flex-row gap-sm items-center"
+                          key={item.id}
+                        >
+                          {i > 0 && <Badge variant="dot" />}
+                          <Link
+                            to={`/person/${item.id}`}
+                            className={`text-blue-400 font-normal`}
+                          >
+                            {item.name}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
 
               <Carosuel>
@@ -113,12 +148,12 @@ export default function MediaCasts() {
                   <Link key={item.id} to={`/person/${item.id}`}>
                     <PersonCard
                       imgUrl={
-                        config
+                        config && item.profile_path
                           ? config?.profileBaseUrl?.[1] + item.profile_path
                           : imgPlaceHolder
                       }
                       name={item.name}
-                      knownFor={item.known_for_department}
+                      character={item.character}
                     />
                   </Link>
                 ))}
