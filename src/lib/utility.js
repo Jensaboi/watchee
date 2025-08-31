@@ -67,3 +67,13 @@ export function getWriters(arr) {
 export function getStoryCreators(arr) {
   return arr.filter(item => item.job.toLowerCase() === "story");
 }
+
+export function getTrailers(videosArr) {
+  return videosArr
+    .filter(
+      item =>
+        item.site.toLowerCase() === "youtube" &&
+        item.type.toLowerCase() === "trailer"
+    )
+    .sort((a, b) => b.size - a.size);
+}

@@ -1,5 +1,4 @@
-import { fetchDetails, fetchTrailer, fetchAgeRatings } from "../lib/tmdbApi";
-import { fetchOmdb } from "../lib/omdbApi";
+import { Suspense } from "react";
 import {
   useLoaderData,
   useNavigate,
@@ -7,8 +6,14 @@ import {
   Outlet,
   Await,
 } from "react-router-dom";
+
+import { fetchDetails, fetchVideos, fetchAgeRatings } from "../lib/tmdbApi";
+import { fetchOmdb } from "../lib/omdbApi";
+
+import useToggle from "../hooks/useToggle";
 import { useTMDBConfig } from "../context/ConfigContext";
 import { useGenres } from "../context/GenreContext";
+import { useAgeExplanations } from "../context/AgeRatingExplanationsContext";
 import {
   getYearStr,
   formatRunTimeStr,
@@ -16,10 +21,11 @@ import {
   getAgeRating,
   getLanguageName,
   getAgeRatingExplanation,
+  getTrailers,
 } from "../lib/utility";
 import Button from "../components/ui/Button";
+import VideoPlayerModal from "../components/VideoPlayerModal";
 import MediaTitle from "../components/MediaTitle";
-import { MoveLeft, Plus, Star } from "lucide-react";
 import MediaGenres from "../components/MediaGenres";
 import MediaOverview from "../components/MediaOverview";
 import MediaDetailsNav from "../components/MediaDetailsNav";
@@ -27,22 +33,21 @@ import MediaDetailsRatings, {
   MediaDetailsRatingsFallback,
 } from "../components/MediaDetailsRatings";
 import MediaDetailsSidebar from "../components/MediaDetailsSidebar";
-import { Suspense } from "react";
-import { useAgeExplanations } from "../context/AgeRatingExplanationsContext";
+import { MoveLeft, Plus, Star } from "lucide-react";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
 
   try {
     const media = await fetchDetails({ mediaType, id });
-    const trailer = await fetchTrailer({ mediaType, id });
     const ageRatings = await fetchAgeRatings({ ...params });
 
-    if (mediaType === "movie") {
-      const omdb = fetchOmdb(media.imdb_id);
-      return { media, trailer, ageRatings, omdb };
-    }
-    return { media, trailer, ageRatings, omdb: null };
+    return {
+      media,
+      videosPromise: fetchVideos({ mediaType, id }),
+      ageRatings,
+      omdb: mediaType === "movie" ? fetchOmdb(media.imdb_id) : null,
+    };
   } catch (error) {
   } finally {
   }
@@ -50,7 +55,7 @@ export async function loader({ params }) {
 }
 
 export default function MediaDetails() {
-  const { media, trailer, ageRatings, omdb } = useLoaderData();
+  const { media, videosPromise, ageRatings, omdb } = useLoaderData();
   const { config } = useTMDBConfig();
   const { movieGenres, tvGenres } = useGenres();
   const navigate = useNavigate();
@@ -58,9 +63,10 @@ export default function MediaDetails() {
   const { movieRatingExplanations, tvRatingExplanations } =
     useAgeExplanations();
   const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
+  const trailerPlayer = useToggle();
 
-  console.log("details", media);
-  //console.log("trailer", trailer);
+  //console.log("details", media);
+  //console.log("videos", videosPromise);
   //console.log("ratings", ageRatings);
   //console.log("omdb", omdb);
   //console.log(movieRatingExplanations);
@@ -112,10 +118,35 @@ export default function MediaDetails() {
             />
 
             <div className="flex-center gap-sm">
-              <Button variant="solid" size="md">
-                Play trailer
-              </Button>
-
+              <Suspense
+                fallback={
+                  <span className="w-[114px] h-[40px] rounded-full bg-bg-300"></span>
+                }
+              >
+                <Await resolve={videosPromise}>
+                  {videos => {
+                    const trailers = getTrailers(videos);
+                    const trailer = trailers[0];
+                    return (
+                      <>
+                        <Button
+                          onClick={trailerPlayer.toggle}
+                          variant="solid"
+                          size="md"
+                        >
+                          Play trailer
+                        </Button>
+                        <VideoPlayerModal
+                          src={`https://www.youtube.com/embed/${trailer.key}`}
+                          headerText={`${title} trailer`}
+                          isOpen={trailerPlayer.isOpen}
+                          close={trailerPlayer.close}
+                        />
+                      </>
+                    );
+                  }}
+                </Await>
+              </Suspense>
               <Button variant="icon">
                 <Plus />
               </Button>
