@@ -3,7 +3,6 @@ import { fetchReviews } from "../lib/tmdbApi";
 import { Suspense } from "react";
 
 export async function loader({ params }) {
-  console.log(params);
   const { mediaType, id } = params;
 
   try {
@@ -21,7 +20,6 @@ export default function MediaReviews() {
       <Suspense fallback={<p>Loading reviews...</p>}>
         <Await resolve={reviewsPromise}>
           {reviews => {
-            console.log(reviews);
             return (
               <div>
                 <h1>Media reviews</h1>

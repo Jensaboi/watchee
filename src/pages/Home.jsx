@@ -5,8 +5,14 @@ import {
   fetchPopular,
   fetchUpcoming,
 } from "../lib/tmdbApi";
+import { Link } from "react-router";
+import Carosuel from "../components/ui/Carosuel";
+import { useTMDBConfig } from "../context/ConfigContext";
+import { useGenres } from "../context/GenreContext";
 
 export default function Home() {
+  const { config } = useTMDBConfig();
+  const { movieGenres, tvGenres } = useGenres();
   const {
     data: popularMovies,
     loading: popularMoviesLoading,
@@ -18,7 +24,7 @@ export default function Home() {
     loading: upcomingMoviesLoading,
     error: upcomingMoviesError,
   } = useApi(fetchUpcoming, { mediaType: "movie" });
-
+  console.log(popularMovies);
   return (
     <>
       <section className="container mx-auto mt-25 p-xl ">
@@ -29,6 +35,20 @@ export default function Home() {
           Whether you’re chasing old favorites or discovering something new,
           it’s all here.
         </p>
+      </section>
+      <section className="container mx-auto">
+        <Carosuel>
+          {popularMovies.map(item => (
+            <Link className="flex-1" to={`/movie/${item.id}`}>
+              <div className="w-40 h-60 ">
+                <img
+                  className="w-full h-full object-center object-cover"
+                  src={config?.posterBaseUrl?.[4] + item?.poster_path}
+                />
+              </div>
+            </Link>
+          ))}
+        </Carosuel>
       </section>
     </>
   );
