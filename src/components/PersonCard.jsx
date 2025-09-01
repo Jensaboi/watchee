@@ -5,9 +5,9 @@ export default function PersonCard({
   character = null,
 }) {
   return (
-    <article className="w-42 flex overflow-hidden flex-col items-center justify-center">
+    <article className="flex overflow-hidden flex-col items-center justify-center">
       <img
-        className="hover:scale-101 border-transparent border-2 hover:border-bg-400 object-center object-cover rounded-full h-40 w-40"
+        className="hover:scale-101 border-transparent border-2 hover:border-bg-400 object-center object-cover size-40 rounded-4xl"
         alt={`${name}`}
         src={imgUrl}
       />

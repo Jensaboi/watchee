@@ -6,6 +6,7 @@ export default function MediaDetailsNav({ className }) {
       <ul className="flex flex-row gap-md">
         <li>
           <NavLink
+            replace
             className={({ isActive }) => {
               return isActive
                 ? "bg-accent/10 text-accent p-md rounded-full "
@@ -19,6 +20,7 @@ export default function MediaDetailsNav({ className }) {
         </li>
         <li>
           <NavLink
+            replace
             className={({ isActive }) => {
               return isActive
                 ? "bg-accent/10 text-accent p-md rounded-full "
@@ -32,6 +34,7 @@ export default function MediaDetailsNav({ className }) {
         </li>
         <li>
           <NavLink
+            replace
             className={({ isActive }) => {
               return isActive
                 ? "bg-accent/10 text-accent p-md rounded-full "

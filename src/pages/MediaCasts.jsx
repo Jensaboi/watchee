@@ -39,7 +39,7 @@ export default function MediaCasts() {
           const creators = media?.created_by;
 
           return (
-            <div className="flex flex-col gap-15">
+            <div className="flex flex-col gap-20">
               <div className="flex flex-col gap-2xl">
                 {director && (
                   <div className="p-sm border-b border-bg-300 flex flex-wrap items-center gap-lg">
@@ -143,7 +143,7 @@ export default function MediaCasts() {
                 )}
               </div>
 
-              <Carosuel data={casts} />
+              <Carosuel mediaType="person" data={casts} />
             </div>
           );
         }}

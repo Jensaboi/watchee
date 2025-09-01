@@ -47,7 +47,9 @@ export default function MediaWatchProviders() {
                   <li>
                     <button
                       className={`${filter === "flatrate" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() => setSearchParams("filter=flatrate")}
+                      onClick={() =>
+                        setSearchParams("filter=flatrate", { replace: true })
+                      }
                     >
                       Streaming
                     </button>
@@ -55,7 +57,9 @@ export default function MediaWatchProviders() {
                   <li>
                     <button
                       className={`${filter === "buy" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() => setSearchParams("filter=buy")}
+                      onClick={() =>
+                        setSearchParams("filter=buy", { replace: true })
+                      }
                     >
                       Buy
                     </button>
@@ -63,7 +67,9 @@ export default function MediaWatchProviders() {
                   <li>
                     <button
                       className={`${filter === "rent" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() => setSearchParams("filter=rent")}
+                      onClick={() =>
+                        setSearchParams("filter=rent", { replace: true })
+                      }
                     >
                       Rent
                     </button>
@@ -72,7 +78,7 @@ export default function MediaWatchProviders() {
                     <li>
                       <Button
                         variant="icon"
-                        onClick={() => setSearchParams("")}
+                        onClick={() => setSearchParams("", { replace: true })}
                       >
                         <X />
                       </Button>
