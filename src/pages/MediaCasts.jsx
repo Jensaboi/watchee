@@ -143,21 +143,7 @@ export default function MediaCasts() {
                 )}
               </div>
 
-              <Carosuel>
-                {casts.map(item => (
-                  <Link key={item.id} to={`/person/${item.id}`}>
-                    <PersonCard
-                      imgUrl={
-                        config && item.profile_path
-                          ? config?.profileBaseUrl?.[1] + item.profile_path
-                          : imgPlaceHolder
-                      }
-                      name={item.name}
-                      character={item.character}
-                    />
-                  </Link>
-                ))}
-              </Carosuel>
+              <Carosuel data={casts} />
             </div>
           );
         }}

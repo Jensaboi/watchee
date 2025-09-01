@@ -37,18 +37,7 @@ export default function Home() {
         </p>
       </section>
       <section className="container mx-auto">
-        <Carosuel>
-          {popularMovies.map(item => (
-            <Link className="flex-1" to={`/movie/${item.id}`}>
-              <div className="w-40 h-60 ">
-                <img
-                  className="w-full h-full object-center object-cover"
-                  src={config?.posterBaseUrl?.[4] + item?.poster_path}
-                />
-              </div>
-            </Link>
-          ))}
-        </Carosuel>
+        <Carosuel mediaType="movie" data={popularMovies} />
       </section>
     </>
   );
