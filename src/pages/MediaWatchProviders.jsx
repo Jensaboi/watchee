@@ -1,7 +1,11 @@
 import { Suspense } from "react";
-import { Await, useLoaderData, useSearchParams } from "react-router";
+import {
+  Await,
+  useLoaderData,
+  useRouteLoaderData,
+  useSearchParams,
+} from "react-router";
 import { fetchWatchProviders } from "../lib/tmdbApi";
-import { useTMDBConfig } from "../context/ConfigContext";
 import { X } from "lucide-react";
 
 import Button from "../components/ui/Button";
@@ -19,7 +23,7 @@ export async function loader({ params }) {
 
 export default function MediaWatchProviders() {
   const watchProvidersPromise = useLoaderData();
-  const { config } = useTMDBConfig();
+  const { config } = useRouteLoaderData("root");
   const [searchParams, setSearchParams] = useSearchParams();
 
   return (
@@ -27,9 +31,11 @@ export default function MediaWatchProviders() {
       <Await resolve={watchProvidersPromise}>
         {watchProviders => {
           const modifiedProviders = [];
+
           for (const [key, val] of Object.entries(watchProviders["US"])) {
             if (Array.isArray(val)) {
               const modifiedArr = val.map(item => ({ ...item, type: key }));
+
               modifiedProviders.push(...modifiedArr);
             }
           }
@@ -102,7 +108,7 @@ export default function MediaWatchProviders() {
                               onMouseEnter={open}
                               onMouseLeave={close}
                               className="size-14 rounded-md"
-                              src={config.logoBaseUrl?.[1] + item.logo_path}
+                              src={config.logoBaseUrl[1] + item.logo_path}
                             />
                           </a>
                           {isOpen && (

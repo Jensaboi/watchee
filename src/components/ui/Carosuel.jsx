@@ -1,13 +1,14 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
-import { useTMDBConfig } from "../../context/ConfigContext";
 import MediaCard from "../MediaCard";
 import PersonCard from "../PersonCard";
 import placeHolderImg from "../../assets/placeholder.png";
 import Button from "./Button";
+import { useRouteLoaderData } from "react-router";
 
 export default function Carosuel({ mediaType = null, data = [] }) {
+  const { config } = useRouteLoaderData("root");
   const [index, setIndex] = useState(0);
   const [colNum, setColNum] = useState(
     window.innerWidth < 420
@@ -22,7 +23,6 @@ export default function Carosuel({ mediaType = null, data = [] }) {
   );
 
   const maxIndex = data.length / colNum;
-  const { config } = useTMDBConfig();
 
   function handleLeftClick() {
     setIndex(prev => Math.max(prev - 1, 0));
@@ -79,7 +79,7 @@ export default function Carosuel({ mediaType = null, data = [] }) {
               <PersonCard
                 imgUrl={
                   item.profile_path
-                    ? config?.profileBaseUrl?.[2] + item.profile_path
+                    ? config.profileBaseUrl[2] + item.profile_path
                     : placeHolderImg
                 }
                 name={item.name}
@@ -89,7 +89,7 @@ export default function Carosuel({ mediaType = null, data = [] }) {
               <MediaCard
                 imgUrl={
                   item.poster_path
-                    ? config?.posterBaseUrl?.[5] + item.poster_path
+                    ? config.posterBaseUrl[5] + item.poster_path
                     : placeHolderImg
                 }
               />

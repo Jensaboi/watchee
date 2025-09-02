@@ -5,6 +5,7 @@ import {
   useParams,
   Outlet,
   Await,
+  useRouteLoaderData,
 } from "react-router-dom";
 
 import {
@@ -17,9 +18,6 @@ import {
 import { fetchOmdb } from "../lib/omdbApi";
 
 import useToggle from "../hooks/useToggle";
-import { useTMDBConfig } from "../context/ConfigContext";
-import { useGenres } from "../context/GenreContext";
-import { useAgeExplanations } from "../context/AgeRatingExplanationsContext";
 import {
   getYearStr,
   formatRunTimeStr,
@@ -69,6 +67,14 @@ export async function loader({ params }) {
 
 export default function MediaDetails() {
   const {
+    config,
+    movieGenres,
+    tvGenres,
+    movieRatingExplanations,
+    tvRatingExplanations,
+  } = useRouteLoaderData("root");
+
+  const {
     media,
     videosPromise,
     ageRatings,
@@ -76,13 +82,10 @@ export default function MediaDetails() {
     similarPromise,
     recommendationsPromise,
   } = useLoaderData();
-  const { config } = useTMDBConfig();
-  const { movieGenres, tvGenres } = useGenres();
+
   const navigate = useNavigate();
   const { mediaType } = useParams();
-  const { movieRatingExplanations, tvRatingExplanations } =
-    useAgeExplanations();
-  const allMediagenres = mediaType === "movie" ? movieGenres : tvGenres;
+  const allgenres = mediaType === "movie" ? movieGenres : tvGenres;
   const trailerPlayer = useToggle();
 
   //console.log("details", media);
@@ -99,6 +102,7 @@ export default function MediaDetails() {
   const title = media?.title || media?.name;
   const releaseDate = media?.release_date || media.first_air_date;
   const ageRating = getAgeRating(mediaType, ageRatings);
+
   return (
     <>
       <div className="relative p-lg w-full h-full min-h-[86vh]">

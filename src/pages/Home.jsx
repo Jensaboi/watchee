@@ -5,14 +5,12 @@ import {
   fetchPopular,
   fetchUpcoming,
 } from "../lib/tmdbApi";
-import { Link } from "react-router";
+import { Link, useRouteLoaderData } from "react-router";
 import Carosuel from "../components/ui/Carosuel";
-import { useTMDBConfig } from "../context/ConfigContext";
-import { useGenres } from "../context/GenreContext";
 
 export default function Home() {
-  const { config } = useTMDBConfig();
-  const { movieGenres, tvGenres } = useGenres();
+  const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
+
   const {
     data: popularMovies,
     loading: popularMoviesLoading,
@@ -24,7 +22,7 @@ export default function Home() {
     loading: upcomingMoviesLoading,
     error: upcomingMoviesError,
   } = useApi(fetchUpcoming, { mediaType: "movie" });
-  console.log(popularMovies);
+  console.log(config);
   return (
     <>
       <section className="container mx-auto mt-25 p-xl ">

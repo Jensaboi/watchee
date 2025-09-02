@@ -2,10 +2,6 @@ import { Suspense } from "react";
 import { fetchCredits } from "../lib/tmdbApi";
 import { Await, Link, useLoaderData, useOutletContext } from "react-router-dom";
 import { getMovieDirector, getStoryCreators, getWriters } from "../lib/utility";
-import { useTMDBConfig } from "../context/ConfigContext";
-import imgPlaceHolder from "../assets/placeholder.png";
-
-import PersonCard from "../components/PersonCard";
 import Badge from "../components/ui/Badge";
 import Carosuel from "../components/ui/Carosuel";
 
@@ -23,7 +19,6 @@ export async function loader({ params }) {
 
 export default function MediaCasts() {
   const creditsPromise = useLoaderData();
-  const { config } = useTMDBConfig();
   const media = useOutletContext();
 
   return (

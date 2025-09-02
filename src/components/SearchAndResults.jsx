@@ -1,8 +1,6 @@
 import useDebouncedSearch from "../hooks/useDebouncedSearch";
-import { useTMDBConfig } from "../context/ConfigContext";
-import { useGenres } from "../context/GenreContext";
 import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 import { getYearStr } from "../lib/utility";
 import Button from "./ui/Button";
 import Dropdown from "./ui/Dropdown";
@@ -11,7 +9,7 @@ export default function SearchAndResults({ closeModal }) {
   const { query, setQuery, media, setMedia, loading, data, error } =
     useDebouncedSearch({ initialQuery: "" });
 
-  const { config } = useTMDBConfig();
+  const { config } = useRouteLoaderData("root");
 
   function closeSearch() {
     closeModal();
@@ -90,7 +88,7 @@ export default function SearchAndResults({ closeModal }) {
                   >
                     <img
                       alt=""
-                      src={config?.posterBaseUrl?.[0] + path}
+                      src={config.posterBaseUrl[0] + path}
                       className="w-full max-w-[48px] object-center object-cover rounded-sm shadow-lg"
                     />
                     <div className="flex flex-col justify-center">

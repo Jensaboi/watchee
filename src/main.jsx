@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import "./index.css";
-import App from "./App.jsx";
+import App, { loader as rootLoader } from "./App.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
 import Movie from "./pages/Movie.jsx";
@@ -27,6 +27,8 @@ const rotuer = createBrowserRouter([
   {
     path: "/",
     Component: App,
+    loader: rootLoader,
+    id: "root",
     children: [
       {
         Component: MainLayout,

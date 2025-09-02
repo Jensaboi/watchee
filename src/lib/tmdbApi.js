@@ -36,7 +36,36 @@ export async function fetchTmdbConfig() {
 
   const data = await response.json();
 
-  return data;
+  const configObj = {
+    posterBaseUrl: [
+      data.images.secure_base_url + data.images.poster_sizes[0],
+      data.images.secure_base_url + data.images.poster_sizes[1],
+      data.images.secure_base_url + data.images.poster_sizes[2],
+      data.images.secure_base_url + data.images.poster_sizes[3],
+      data.images.secure_base_url + data.images.poster_sizes[4],
+      data.images.secure_base_url + data.images.poster_sizes[5],
+      data.images.secure_base_url + data.images.poster_sizes[6],
+    ],
+    backdropBaseUrl: [
+      data.images.secure_base_url + data.images.backdrop_sizes[0],
+      data.images.secure_base_url + data.images.backdrop_sizes[1],
+      data.images.secure_base_url + data.images.backdrop_sizes[2],
+      data.images.secure_base_url + data.images.backdrop_sizes[3],
+    ],
+    profileBaseUrl: [
+      data.images.secure_base_url + data.images.profile_sizes[0],
+      data.images.secure_base_url + data.images.profile_sizes[1],
+      data.images.secure_base_url + data.images.profile_sizes[2],
+      data.images.secure_base_url + data.images.profile_sizes[3],
+    ],
+    logoBaseUrl: [
+      data.images.secure_base_url + data.images.logo_sizes[0],
+      data.images.secure_base_url + data.images.logo_sizes[1],
+      data.images.secure_base_url + data.images.logo_sizes[2],
+    ],
+  };
+
+  return configObj;
 }
 
 export async function fetchDetails({ mediaType, id, lang = "en-US" }) {
@@ -132,7 +161,7 @@ export async function fetchSimilar({ mediaType, id, lang = "en-US" }) {
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
 
   const data = await response.json();
-
+  console.log(data);
   return data.results;
 }
 

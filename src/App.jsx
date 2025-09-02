@@ -1,20 +1,45 @@
 import { Outlet } from "react-router-dom";
-import ConfigProvider from "./context/ConfigContext";
-import GenreProvider from "./context/GenreContext";
-import AgeRatingExplanationProvider from "./context/AgeRatingExplanationsContext";
 import ScrollToTop from "./hooks/scrollToTop";
 
+import {
+  fetchTmdbConfig,
+  fetchGenres,
+  fetchAgeRatingExplanation,
+} from "./lib/tmdbApi";
+
+export async function loader() {
+  try {
+    const [
+      config,
+      movieGenres,
+      tvGenres,
+      movieRatingExplanations,
+      tvRatingExplanations,
+    ] = await Promise.all([
+      fetchTmdbConfig(),
+      fetchGenres({ mediaType: "movie" }),
+      fetchGenres({ mediaType: "tv" }),
+      fetchAgeRatingExplanation({ mediaType: "movie" }),
+      fetchAgeRatingExplanation({ mediaType: "tv" }),
+    ]);
+
+    return {
+      config,
+      movieGenres,
+      tvGenres,
+      movieRatingExplanations,
+      tvRatingExplanations,
+    };
+  } catch (error) {
+    throw Error(`ERROR:${error.message} status: ${error.status}`);
+  }
+  return null;
+}
 function App() {
   return (
     <>
-      <ConfigProvider>
-        <GenreProvider>
-          <AgeRatingExplanationProvider>
-            <ScrollToTop />
-            <Outlet />
-          </AgeRatingExplanationProvider>
-        </GenreProvider>
-      </ConfigProvider>
+      <ScrollToTop />
+      <Outlet />
     </>
   );
 }
