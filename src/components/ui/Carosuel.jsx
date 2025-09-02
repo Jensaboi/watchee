@@ -8,7 +8,7 @@ import Button from "./Button";
 import { useRouteLoaderData } from "react-router";
 
 export default function Carosuel({ mediaType = null, data = [] }) {
-  const { config } = useRouteLoaderData("root");
+  const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const [index, setIndex] = useState(0);
   const [colNum, setColNum] = useState(
     window.innerWidth < 420
@@ -92,6 +92,7 @@ export default function Carosuel({ mediaType = null, data = [] }) {
                     ? config.posterBaseUrl[5] + item.poster_path
                     : placeHolderImg
                 }
+                title={item?.name || item.title}
               />
             )}
           </Link>

@@ -7,7 +7,6 @@ import {
   Await,
   useRouteLoaderData,
 } from "react-router-dom";
-
 import {
   fetchDetails,
   fetchVideos,
@@ -16,7 +15,6 @@ import {
   fetchRecommendations,
 } from "../lib/tmdbApi";
 import { fetchOmdb } from "../lib/omdbApi";
-
 import useToggle from "../hooks/useToggle";
 import {
   getYearStr,
@@ -40,6 +38,7 @@ import MediaDetailsSidebar from "../components/MediaDetailsSidebar";
 import Carosuel from "../components/ui/Carosuel";
 import { MoveLeft, Plus, Star } from "lucide-react";
 import placeHolderImg from "../assets/placeholder.png";
+
 export async function loader({ params }) {
   const { mediaType, id } = params;
 
@@ -50,7 +49,7 @@ export async function loader({ params }) {
     return {
       media,
       ageRatings,
-      omdb: mediaType === "movie" ? fetchOmdb(media.imdb_id) : null,
+      omdbPromise: mediaType === "movie" ? fetchOmdb(media.imdb_id) : null,
       videosPromise: fetchVideos({ mediaType, id }),
       similarPromise: fetchSimilar({ mediaType, id }),
       recommendationsPromise: fetchRecommendations({ ...params }),
@@ -66,32 +65,25 @@ export async function loader({ params }) {
 }
 
 export default function MediaDetails() {
-  const {
-    config,
-    movieGenres,
-    tvGenres,
-    movieRatingExplanations,
-    tvRatingExplanations,
-  } = useRouteLoaderData("root");
+  const { config, movieRatingExplanations, tvRatingExplanations } =
+    useRouteLoaderData("root");
 
   const {
     media,
-    videosPromise,
     ageRatings,
-    omdb,
+    omdbPromise,
+    videosPromise,
     similarPromise,
     recommendationsPromise,
   } = useLoaderData();
 
   const navigate = useNavigate();
   const { mediaType } = useParams();
-  const allgenres = mediaType === "movie" ? movieGenres : tvGenres;
   const trailerPlayer = useToggle();
 
   //console.log("details", media);
   //console.log("videos", videosPromise);
   //console.log("ratings", ageRatings);
-  //console.log("omdb", omdb);
   //console.log(movieRatingExplanations);
   //console.log("Similar", similarPromise);
   //console.log("recommendations", recommendationsPromise);
@@ -186,12 +178,12 @@ export default function MediaDetails() {
               </Button>
             </div>
 
-            {omdb && (
+            {omdbPromise && (
               <Suspense fallback={<MediaDetailsRatingsFallback />}>
-                <Await resolve={omdb}>
-                  {resolvedOmdb => (
+                <Await resolve={omdbPromise}>
+                  {omdbData => (
                     <MediaDetailsRatings
-                      data={resolvedOmdb}
+                      data={omdbData}
                       tmdbRating={media.vote_average.toFixed(1)}
                     />
                   )}
@@ -202,7 +194,7 @@ export default function MediaDetails() {
             <MediaGenres genres={media.genres} />
 
             {media?.tagline && (
-              <p className="text-center text-text-500">"{media.tagline}"</p>
+              <p className="text-center text-text-400">"{media.tagline}"</p>
             )}
 
             <MediaOverview overview={media.overview} />
@@ -211,7 +203,7 @@ export default function MediaDetails() {
 
         <section className="relative z-10 container mx-auto my-10 flex flex-col md:flex-row gap-20">
           <div className="flex-1 min-w-0 pt-5">
-            <MediaDetailsNav className="mb-20 " />
+            <MediaDetailsNav className="mb-16 " />
             <Outlet context={media} />
           </div>
 
@@ -231,13 +223,13 @@ export default function MediaDetails() {
             }
             spokenLanguages={media.spoken_languages}
             awards={
-              omdb && (
+              omdbPromise && (
                 <Suspense fallback={<p>loading awards...</p>}>
-                  <Await resolve={omdb}>
-                    {resolvedOmdb => (
+                  <Await resolve={omdbPromise}>
+                    {omdbData => (
                       <div>
                         <h3>Awards</h3>
-                        <p>{resolvedOmdb.awards || "Unknown"}</p>
+                        <p>{omdbData.awards || "Unknown"}</p>
                       </div>
                     )}
                   </Await>

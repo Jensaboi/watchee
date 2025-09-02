@@ -5,18 +5,17 @@ export default function PersonCard({
   character = null,
 }) {
   return (
-    <article className="flex overflow-hidden flex-col items-center justify-center">
-      <img
-        className="hover:scale-101 border-transparent border-2 hover:border-bg-400 object-center object-cover size-40 rounded-4xl"
-        alt={`${name}`}
-        src={imgUrl}
-      />
-      <div>
-        <h3 className="truncate font-normal">{name}</h3>
-        <p className="text-start text-sm text-text-300">
-          {knownFor || character}
-        </p>
+    <article className="relative gap-xs cursor-pointer transition-transform duration-300 ease-out hover:scale-102 hover:shadow-lg rounded-xl overflow-hidden">
+      <div className="aspect-square h-full w-full overflow-hidden rounded-full">
+        <img
+          className="object-cover object-center h-full w-full transition-transform duration-500 hover:scale-102"
+          alt={name}
+          src={imgUrl}
+        />
       </div>
+
+      <h3 className="text-base font-medium">{name}</h3>
+      <p className="text-sm text-text-400">{knownFor || character}</p>
     </article>
   );
 }
