@@ -161,7 +161,7 @@ export async function fetchSimilar({ mediaType, id, lang = "en-US" }) {
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
 
   const data = await response.json();
-  console.log(data);
+
   return data.results;
 }
 
