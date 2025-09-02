@@ -22,7 +22,7 @@ export default function Home() {
     loading: upcomingMoviesLoading,
     error: upcomingMoviesError,
   } = useApi(fetchUpcoming, { mediaType: "movie" });
-  console.log(config);
+
   return (
     <>
       <section className="container mx-auto mt-25 p-xl ">

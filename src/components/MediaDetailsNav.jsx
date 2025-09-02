@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 export default function MediaDetailsNav({ className }) {
   return (
     <nav className={`${className} `}>
-      <ul className="flex flex-row gap-md">
+      <ul className="flex flex-row gap-xs sm:gap-md">
         <li>
           <NavLink
             replace
@@ -15,7 +15,7 @@ export default function MediaDetailsNav({ className }) {
             to=""
             end
           >
-            Cast & Crew
+            Credits
           </NavLink>
         </li>
         <li>

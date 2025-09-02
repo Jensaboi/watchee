@@ -1,8 +1,9 @@
+import { Form } from "react-router";
+export async function action({ request }) {}
 export default function Discover() {
   return (
     <>
-      <h1>Discover page</h1>
-      <p>text</p>
+      <Form></Form>
     </>
   );
 }
