@@ -231,3 +231,25 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
 
   return data.results;
 }
+
+export async function fetchWithQueryFilters({
+  mediaType,
+  lang,
+  releaseYear,
+  sortBy,
+  votes,
+  voteAverage,
+  withCrew,
+  withCasts,
+}) {
+  return `${BASE_URL}/discover/${mediaType}?${lang && `language=${lang}`}${releaseYear && `&primary_release_year=${releaseYear}`}&page=1&api_key=${API_KEY}`;
+  /*   const response = await fetch(
+    `${BASE_URL}/discover/${mediaType}?${lang && `language=${lang}`}${releaseYear && `&primary_release_year=${releaseYear}`}&page=1&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results; */
+}
