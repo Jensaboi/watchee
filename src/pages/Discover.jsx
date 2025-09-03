@@ -12,11 +12,12 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
-  console.log(url);
-  console.log(Object.entries(url.searchParams));
-
+  const mediaType = url.searchParams.get("mediaType");
+  url.searchParams.delete("mediaType");
+  console.log(url.search);
+  console.log(mediaType);
   try {
-    const data = await fetchWithQueryFilters();
+    const data = await fetchWithQueryFilters({ mediaType, search });
     return data;
   } catch (error) {}
   return null;
@@ -27,9 +28,20 @@ export default function Discover() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const [searchParams, setSearchParmas] = useSearchParams();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+  }
+  console.log(data);
   return (
     <>
-      <section></section>
+      <section>
+        <Form onSubmit={handleSubmit}>
+          <select>
+            <option value="name">name</option>
+            <option value="apple">apple</option>
+          </select>
+        </Form>
+      </section>
     </>
   );
 }

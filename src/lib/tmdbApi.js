@@ -236,17 +236,17 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
   return data.results;
 }
 
-export async function fetchWithQueryFilters({ params }) {
-  const URL = `${BASE_URL}`;
-
-  return URL;
-  /*   const response = await fetch(
-    `${BASE_URL}/discover/${mediaType}?${lang && `language=${lang}`}${releaseYear && `&primary_release_year=${releaseYear}`}&page=1&api_key=${API_KEY}`
-  );
+export async function fetchWithQueryFilters({ mediaType, search, page = 1 }) {
+  const URL = `${BASE_URL}/discover/${mediaType}${search}page=${page}&api_key=${API_KEY}`;
+  console.log(URL);
+  const response = await fetch(URL, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  });
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
 
   const data = await response.json();
 
-  return data.results; */
+  return data;
 }
