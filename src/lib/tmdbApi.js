@@ -2,11 +2,14 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 const BASE_URL = "https://api.themoviedb.org/3";
 
 export async function fetchWithSearchQuery(
-  { query, media, lang = "en-US" },
+  { query, mediaType, lang = "en-US" },
   signal
 ) {
+  if (!query && typeof query === "string" && !query.trim()) {
+    return [];
+  }
   const response = await fetch(
-    `${BASE_URL}/search/${media}?query=${query}&language=${lang}&page=1&api_key=${API_KEY}`,
+    `${BASE_URL}/search/${mediaType}?query=${query}&language=${lang}&page=1&api_key=${API_KEY}`,
     { signal }
   );
 

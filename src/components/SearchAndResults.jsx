@@ -1,13 +1,20 @@
 import useDebouncedSearch from "../hooks/useDebouncedSearch";
+import { useState } from "react";
 import { Search, X, ChevronDown, ChevronUp } from "lucide-react";
 import { Link, useRouteLoaderData } from "react-router-dom";
 import { getYearStr } from "../lib/utility";
 import Button from "./ui/Button";
 import Dropdown from "./ui/Dropdown";
+import { fetchWithSearchQuery } from "../lib/tmdbApi";
 
 export default function SearchAndResults({ closeModal }) {
-  const { query, setQuery, media, setMedia, loading, data, error } =
-    useDebouncedSearch({ initialQuery: "" });
+  const [query, setQuery] = useState("");
+  const [mediaType, setMediaType] = useState("multi");
+
+  const { loading, data, error } = useDebouncedSearch(fetchWithSearchQuery, {
+    query,
+    mediaType,
+  });
 
   const { config } = useRouteLoaderData("root");
 
@@ -26,7 +33,7 @@ export default function SearchAndResults({ closeModal }) {
           >
             <div className="relative flex items-center justify-between w-full focus:outline-none focus-within:ring-2 focus-within:ring-bg-500 transition rounded-full">
               <Dropdown className="relative">
-                {({ isOpen, toggle, open, close }) => (
+                {({ isOpen, toggle }) => (
                   <>
                     <button
                       className="bg-bg-300 text-text-400 pl-5 pr-3 py-3 rounded-l-full flex-center gap-1"

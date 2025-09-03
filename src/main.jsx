@@ -18,7 +18,7 @@ import MediaReviews, {
 } from "./pages/MediaReviews.jsx";
 import PersonDetails from "./pages/PersonDetails.jsx";
 import NotFound from "./pages/NotFound.jsx";
-import Discover from "./pages/Discover.jsx";
+import Discover, { action as discoverAction } from "./pages/Discover.jsx";
 import MediaWatchProviders, {
   loader as mediaWatchProvidersLoader,
 } from "./pages/MediaWatchProviders.jsx";
@@ -36,7 +36,7 @@ const rotuer = createBrowserRouter([
           { index: true, Component: Home },
           { path: "movie", Component: Movie },
           { path: "tv", Component: Tv },
-          { path: "discover", Component: Discover },
+          { path: "discover", Component: Discover, action: discoverAction },
           {
             path: ":mediaType/:id",
             Component: MediaDetails,

@@ -1,21 +1,11 @@
 import { useState, useEffect } from "react";
-import { fetchWithSearchQuery } from "../lib/tmdbApi";
 
-export default function useDebouncedSearch(
-  { initialQuery = "", initialMedia = "multi", lang = "en-US" },
-  delay = 200
-) {
-  const [query, setQuery] = useState(initialQuery);
-  const [media, setMedia] = useState(initialMedia);
+export default function useDebouncedSearch(fetchFn, params, delay = 200) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!query.trim()) {
-      setData([]);
-      return;
-    }
     const controller = new AbortController();
 
     const timerId = setTimeout(() => {
@@ -23,10 +13,7 @@ export default function useDebouncedSearch(
         setLoading(true);
 
         try {
-          const queryData = await fetchWithSearchQuery(
-            { query, media, lang },
-            controller.signal
-          );
+          const queryData = await fetchFn({ ...params }, controller.signal);
 
           setData(queryData);
           setError(null);
@@ -46,7 +33,7 @@ export default function useDebouncedSearch(
       clearTimeout(timerId);
       controller.abort();
     };
-  }, [query, media, lang, delay]);
+  }, [...Object.values(params), delay]);
 
-  return { query, setQuery, media, setMedia, loading, data, error };
+  return { loading, data, error };
 }

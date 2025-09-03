@@ -36,7 +36,10 @@
   button,
   input,
   span,
-  li {
+  li,
+  select,
+  option,
+  label {
     @apply font-popppins text-text-200 text-base;
   }
   h1 {
