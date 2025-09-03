@@ -8,6 +8,7 @@ export async function fetchWithSearchQuery(
   if (!query && typeof query === "string" && !query.trim()) {
     return [];
   }
+
   const response = await fetch(
     `${BASE_URL}/search/${mediaType}?query=${query}&language=${lang}&page=1&api_key=${API_KEY}`,
     { signal }
@@ -235,17 +236,10 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
   return data.results;
 }
 
-export async function fetchWithQueryFilters({
-  mediaType,
-  lang,
-  releaseYear,
-  sortBy,
-  votes,
-  voteAverage,
-  withCrew,
-  withCasts,
-}) {
-  return `${BASE_URL}/discover/${mediaType}?${lang && `language=${lang}`}${releaseYear && `&primary_release_year=${releaseYear}`}&page=1&api_key=${API_KEY}`;
+export async function fetchWithQueryFilters({ params }) {
+  const URL = `${BASE_URL}`;
+
+  return URL;
   /*   const response = await fetch(
     `${BASE_URL}/discover/${mediaType}?${lang && `language=${lang}`}${releaseYear && `&primary_release_year=${releaseYear}`}&page=1&api_key=${API_KEY}`
   );
