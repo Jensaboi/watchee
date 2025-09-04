@@ -1,6 +1,5 @@
 import {
-  Form,
-  useActionData,
+  useNavigation,
   useLoaderData,
   useRouteLoaderData,
   useSearchParams,
@@ -9,97 +8,70 @@ import { fetchWithQueryFilters } from "../lib/tmdbApi";
 import Dropdown from "../components/ui/Dropdown";
 import Button from "../components/ui/Button";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
 
 export async function loader({ request }) {
   const url = new URL(request.url);
 
-  const mediaType = url.searchParams.get("mediaType");
+  let mediaType = url.searchParams.get("mediaType");
 
-  const paramsArr = [
-    ...url.searchParams.entries().map(([key, val]) => `${key}=${val}`),
-  ];
+  if (!mediaType) {
+    url.searchParams.set("mediaType", "movie");
+    mediaType = url.searchParams.get("mediaType");
+  }
 
   try {
-    const data = await fetchWithQueryFilters(mediaType, paramsArr);
-    return data;
+    const data = await fetchWithQueryFilters(mediaType, url.search);
+
+    return { mediaType, data };
   } catch (error) {}
   return null;
 }
 
 export default function Discover() {
-  const data = useLoaderData();
-
+  const { mediaType, data } = useLoaderData();
+  const navigation = useNavigation();
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const [searchParams, setSearchParmas] = useSearchParams();
-
-  function updatePage(pageCount) {
-    searchParams.set("page", pageCount);
+  console.log(navigation.state);
+  console.log(data);
+  function appendSearchParams(key, val) {
+    searchParams.set(key, val);
     setSearchParmas(searchParams);
   }
 
   return (
     <>
       <section className="container mx-auto w-full h-full">
-        <Form>
-          <div>
-            <label htmlFor="mediaType">movie</label>
-            <input
-              defaultChecked
-              id="mediaType"
-              name="mediaType"
-              value="movie"
-              type="radio"
-            />
-            <label htmlFor="mediaType">tv</label>
-            <input id="mediaType" name="mediaType" value="tv" type="radio" />
-          </div>
-          <div>
-            <label htmlFor="sort_by">Sort by:</label>
-            <select name="sort_by" id="sort_by">
-              <option defaultValue={true} value="popularity.desc">
-                Popularity desc
-              </option>
-              <option value="popularity.asc">Popularity asc</option>
-              <option value="vote_average.desc">Vote average desc</option>
-              <option value="vote_average.asc">Vote average asc</option>
-            </select>
-          </div>
-          <div>
-            <label htmlFor="vote_average.gte">vote average lowest:</label>
-            <input
-              name="vote_average.gte"
-              id="vote_average.gte"
-              type="number"
-              max={10}
-              min={0}
-              defaultValue={0}
-            />
-            <label htmlFor="vote_average.lte">vote average highest:</label>
-            <input
-              name="vote_average.lte"
-              id="vote_average.lte"
-              type="number"
-              max={10}
-              min={0}
-              defaultValue={10}
-            />
-          </div>
-          <button type="submit">submit</button>
-        </Form>
-        <button
-          onClick={() => {
-            updatePage(data?.page + 1);
-          }}
-        >
-          Page {data?.page}
-        </button>
+        <div className="flex ">
+          <button
+            onClick={() => appendSearchParams("mediaType", "movie")}
+            className={mediaType === "movie" ? "active" : "not-active"}
+          >
+            Movies
+          </button>
+          <button
+            onClick={() => appendSearchParams("mediaType", "tv")}
+            className={mediaType === "tv" ? "active" : "not-active"}
+          >
+            {" "}
+            Tv-shows
+          </button>
+          <button
+            onClick={() => appendSearchParams("another", "something")}
+            className={mediaType === "tv" ? "active" : "not-active"}
+          >
+            {" "}
+            blabla
+          </button>
+        </div>
+        <Dropdown>
+          {({ isOpen, toggle, close }) => (
+            <>
+              <Button>{searchParams.get("")}</Button>
+            </>
+          )}
+        </Dropdown>
       </section>
-      <div className="container mx-auto grid grid-cols-6 gap-md">
-        {data.results.map(item => (
-          <img src={config.posterBaseUrl[2] + item.poster_path} />
-        ))}
-      </div>
     </>
   );
 }

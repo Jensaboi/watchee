@@ -8,9 +8,7 @@ export default function MediaDetailsNav({ className }) {
           <NavLink
             replace
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full "
-                : "hover:bg-bg-400 transition-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             to=""
             end
@@ -22,9 +20,7 @@ export default function MediaDetailsNav({ className }) {
           <NavLink
             replace
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full "
-                : "hover:bg-bg-400 transition-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             to="watch"
             end
@@ -36,9 +32,7 @@ export default function MediaDetailsNav({ className }) {
           <NavLink
             replace
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full "
-                : "hover:bg-bg-400 transition-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             to="reviews"
             end

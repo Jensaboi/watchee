@@ -36,9 +36,7 @@ export default function PrimaryNav({ close, isOpen }) {
             onClick={close}
             to="/movie"
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full"
-                : "hover:bg-bg-400 transistion-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             end
           >
@@ -50,9 +48,7 @@ export default function PrimaryNav({ close, isOpen }) {
             onClick={close}
             to="/tv"
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full "
-                : "hover:bg-bg-400 transistion-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             end
           >
@@ -64,9 +60,7 @@ export default function PrimaryNav({ close, isOpen }) {
             onClick={close}
             to="/discover"
             className={({ isActive }) => {
-              return isActive
-                ? "bg-accent/10 text-accent p-md rounded-full "
-                : "hover:bg-bg-400 transistion-color ease-in duration-300 p-md rounded-full";
+              return isActive ? "active" : "not-active";
             }}
             end
           >

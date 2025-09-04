@@ -61,3 +61,12 @@
 @utility flex-center {
   @apply flex justify-center items-center;
 }
+
+@layer components {
+  .active {
+    @apply bg-accent/10 text-accent p-md rounded-full;
+  }
+  .not-active {
+    @apply hover:bg-bg-400 transition-all ease-in duration-300 p-md rounded-full;
+  }
+}
