@@ -2,26 +2,23 @@ import {
   useNavigation,
   useLoaderData,
   useRouteLoaderData,
-  useSearchParams,
+  NavLink,
+  Form,
+  Link,
 } from "react-router";
 import { fetchWithQueryFilters } from "../lib/tmdbApi";
 import Dropdown from "../components/ui/Dropdown";
 import Button from "../components/ui/Button";
+import MediaCard from "../components/MediaCard";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-export async function loader({ request }) {
+export async function loader({ request, params }) {
+  const { mediaType } = params;
   const url = new URL(request.url);
-
-  let mediaType = url.searchParams.get("mediaType");
-
-  if (!mediaType) {
-    url.searchParams.set("mediaType", "movie");
-    mediaType = url.searchParams.get("mediaType");
-  }
+  const searchFilters = url.search;
 
   try {
-    const data = await fetchWithQueryFilters(mediaType, url.search);
-
+    const data = await fetchWithQueryFilters(mediaType, searchFilters || "?");
     return { mediaType, data };
   } catch (error) {}
   return null;
@@ -31,47 +28,96 @@ export default function Discover() {
   const { mediaType, data } = useLoaderData();
   const navigation = useNavigation();
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
-  const [searchParams, setSearchParmas] = useSearchParams();
-  console.log(navigation.state);
-  console.log(data);
-  function appendSearchParams(key, val) {
-    searchParams.set(key, val);
-    setSearchParmas(searchParams);
-  }
 
+  console.log(navigation.state);
+  console.log("data", data);
+
+  console.log(movieGenres);
+  console.log(tvGenres);
   return (
     <>
-      <section className="container mx-auto w-full h-full">
-        <div className="flex ">
-          <button
-            onClick={() => appendSearchParams("mediaType", "movie")}
-            className={mediaType === "movie" ? "active" : "not-active"}
-          >
-            Movies
-          </button>
-          <button
-            onClick={() => appendSearchParams("mediaType", "tv")}
-            className={mediaType === "tv" ? "active" : "not-active"}
-          >
-            {" "}
-            Tv-shows
-          </button>
-          <button
-            onClick={() => appendSearchParams("another", "something")}
-            className={mediaType === "tv" ? "active" : "not-active"}
-          >
-            {" "}
-            blabla
-          </button>
+      <section className="container p-lg mx-auto w-full h-full max-w-[1250px]">
+        <div className="flex items-center">
+          <h2>Filters</h2>
+          <nav className="container mx-auto p-lg">
+            <ul className="flex items-center gap-lg">
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active" : "not-active"
+                  }
+                  to="/discover/movie"
+                >
+                  Movies
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  className={({ isActive }) =>
+                    isActive ? "active" : "not-active"
+                  }
+                  to="/discover/tv"
+                >
+                  Tvshows
+                </NavLink>
+              </li>
+            </ul>
+          </nav>
         </div>
-        <Dropdown>
-          {({ isOpen, toggle, close }) => (
-            <>
-              <Button>{searchParams.get("")}</Button>
-            </>
+        <Form>
+          <Dropdown>
+            {({ isOpen, toggle, close }) => (
+              <>
+                <Button></Button>
+              </>
+            )}
+          </Dropdown>
+        </Form>
+
+        <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-md">
+          {navigation.state === "loading" ? (
+            <LoadingSkeleton />
+          ) : (
+            data.results.map(item => (
+              <li key={item.id}>
+                <Link to={`/${mediaType}/${item.id}`}>
+                  <MediaCard
+                    imgUrl={config.posterBaseUrl[3] + item.poster_path}
+                    title={item?.name || item?.title}
+                  />
+                </Link>
+              </li>
+            ))
           )}
-        </Dropdown>
+        </ol>
       </section>
+    </>
+  );
+}
+
+export function LoadingSkeleton() {
+  return (
+    <>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
+      <div className="w-full max-w-60 h-70 rounded-md bg-bg-300"></div>
     </>
   );
 }

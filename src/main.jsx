@@ -36,7 +36,11 @@ const rotuer = createBrowserRouter([
           { index: true, Component: Home },
           { path: "movie", Component: Movie },
           { path: "tv", Component: Tv },
-          { path: "discover", Component: Discover, loader: discoverLoader },
+          {
+            path: "discover/:mediaType",
+            Component: Discover,
+            loader: discoverLoader,
+          },
           {
             path: ":mediaType/:id",
             Component: MediaDetails,

@@ -58,7 +58,7 @@ export default function PrimaryNav({ close, isOpen }) {
         <li>
           <NavLink
             onClick={close}
-            to="/discover"
+            to="/discover/movie"
             className={({ isActive }) => {
               return isActive ? "active" : "not-active";
             }}
