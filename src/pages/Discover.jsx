@@ -125,6 +125,7 @@ export default function Discover() {
                 <Button
                   className={item === currentPage ? "border-text-100" : ""}
                   variant="page"
+                  onClick={() => setSearchParams({ page: item })}
                 >
                   {item}
                 </Button>
