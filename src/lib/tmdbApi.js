@@ -238,7 +238,7 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
 
 export async function fetchWithQueryFilters(mediaType, searchParams) {
   console.log(
-    `${BASE_URL}/discover/${mediaType}${searchParams}&api_key=${API_KEY}`
+    `${BASE_URL}/discover/${mediaType}${searchParams}&include_adult=false&api_key=${API_KEY}`
   );
   const response = await fetch(
     `${BASE_URL}/discover/${mediaType}${searchParams}&api_key=${API_KEY}`

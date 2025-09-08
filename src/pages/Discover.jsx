@@ -18,12 +18,11 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-
+import placeholderImg from "../assets/placeholder.png";
 export async function loader({ request, params }) {
   const { mediaType } = params;
   const url = new URL(request.url);
   const searchFilters = url.search;
-
   try {
     const data = await fetchWithQueryFilters(mediaType, searchFilters || "?");
     return { data };
@@ -47,15 +46,12 @@ export default function Discover() {
       pageNavArr.push(i + currentPage);
     }
   }
-  console.log(pageNavArr);
-  console.log("data", data);
 
-  console.log(movieGenres);
-  console.log(tvGenres);
-  function addSearchParam(key, val) {
-    searchParams.append(key, val);
-    searchParams.set(searchParams);
-  }
+  console.log("data", data);
+  console.log(searchParams.toString());
+  //console.log(movieGenres);
+  //console.log(tvGenres);
+
   return (
     <>
       <section className="container p-lg mx-auto w-full h-full max-w-[1250px]">
@@ -87,13 +83,21 @@ export default function Discover() {
           </nav>
         </div>
         <Form>
-          <Dropdown>
-            {({ isOpen, toggle, close }) => (
-              <>
-                <Button></Button>
-              </>
-            )}
-          </Dropdown>
+          <div>
+            <label htmlFor="sort_by">sort by:</label>
+            <select
+              onChange={e => {
+                setSearchParams(`sort_by=${e.target.value}`);
+              }}
+              name="sort_by"
+              id="sort_by"
+            >
+              <option value="popularity.desc">Most Popular</option>
+              <option value="popularity.asc">Less Popular</option>
+              <option value="primary_release_date.asc">Newest</option>
+              <option value="primary_release_date.desc">Oldest</option>
+            </select>
+          </div>
         </Form>
 
         <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-md">
@@ -104,7 +108,11 @@ export default function Discover() {
               <li key={item.id}>
                 <Link to={`/${mediaType}/${item.id}`}>
                   <MediaCard
-                    imgUrl={config.posterBaseUrl[3] + item.poster_path}
+                    imgUrl={
+                      item.poster_path
+                        ? config.posterBaseUrl[3] + item.poster_path
+                        : placeholderImg
+                    }
                     title={item?.name || item?.title}
                   />
                 </Link>
