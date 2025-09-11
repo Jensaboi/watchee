@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import {
   Await,
   useLoaderData,
+  useParams,
   useRouteLoaderData,
   useSearchParams,
 } from "react-router";
@@ -25,14 +26,44 @@ export default function MediaWatchProviders() {
   const watchProvidersPromise = useLoaderData();
   const { config } = useRouteLoaderData("root");
   const [searchParams, setSearchParams] = useSearchParams();
+  const { mediaType } = useParams();
+
+  function addSearchFilters(key, value) {
+    searchParams.set(key, value);
+    setSearchParams(searchParams, { replace: true, preventScrollReset: true });
+  }
 
   return (
     <Suspense fallback={<p>Loading providers...</p>}>
       <Await resolve={watchProvidersPromise}>
         {watchProviders => {
+          let countryStr = searchParams.get("country") || "US";
           const modifiedProviders = [];
+          const possibleCountries = [];
 
-          for (const [key, val] of Object.entries(watchProviders["US"])) {
+          for (const countryKey in watchProviders) {
+            possibleCountries.push(countryKey);
+          }
+
+          if (
+            possibleCountries[0] === undefined ||
+            possibleCountries === null
+          ) {
+            return (
+              <div>
+                <p>
+                  Sorry cant find providers for this{" "}
+                  {mediaType === "movie" ? mediaType : "Tv show"}
+                </p>
+              </div>
+            );
+          }
+
+          if (!possibleCountries.includes(countryStr)) {
+            countryStr = possibleCountries[0];
+          }
+
+          for (const [key, val] of Object.entries(watchProviders[countryStr])) {
             if (Array.isArray(val)) {
               const modifiedArr = val.map(item => ({ ...item, type: key }));
 
@@ -48,14 +79,23 @@ export default function MediaWatchProviders() {
 
           return (
             <div>
-              <nav>
+              <nav className="flex gap-lg">
+                <select
+                  defaultValue={countryStr}
+                  onChange={e => addSearchFilters("country", e.target.value)}
+                  className="bg-bg-300"
+                >
+                  {possibleCountries.map((item, i) => (
+                    <option key={i + item} value={item}>
+                      {item}
+                    </option>
+                  ))}
+                </select>
                 <ul className="flex items-center justify-start gap-lg">
                   <li>
                     <button
                       className={`${filter === "flatrate" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() =>
-                        setSearchParams("filter=flatrate", { replace: true })
-                      }
+                      onClick={() => addSearchFilters("filter", "flatrate")}
                     >
                       Streaming
                     </button>
@@ -63,9 +103,7 @@ export default function MediaWatchProviders() {
                   <li>
                     <button
                       className={`${filter === "buy" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() =>
-                        setSearchParams("filter=buy", { replace: true })
-                      }
+                      onClick={() => addSearchFilters("filter", "buy")}
                     >
                       Buy
                     </button>
@@ -73,9 +111,7 @@ export default function MediaWatchProviders() {
                   <li>
                     <button
                       className={`${filter === "rent" ? "text-accent" : ""} bg-bg-300 p-sm px-lg rounded-md`}
-                      onClick={() =>
-                        setSearchParams("filter=rent", { replace: true })
-                      }
+                      onClick={() => addSearchFilters("filter", "rent")}
                     >
                       Rent
                     </button>
@@ -84,7 +120,7 @@ export default function MediaWatchProviders() {
                     <li>
                       <Button
                         variant="icon"
-                        onClick={() => setSearchParams("", { replace: true })}
+                        onClick={() => addSearchFilters("filter", "")}
                       >
                         <X />
                       </Button>
@@ -100,7 +136,7 @@ export default function MediaWatchProviders() {
                         <>
                           <a
                             className="text-blue-400 hover:underline"
-                            href={watchProviders["US"].link}
+                            href={watchProviders[countryStr].link}
                             target="_blank"
                             rel="noopener"
                           >

@@ -59,28 +59,11 @@ export default function Discover() {
   }
 
   function addSearchFilters(key, value) {
-    /* const newParams = new URLSearchParams();
-    newParams.set(key, value); 
-    console.log(genreFilters);
-    */
     searchParams.set(key, value);
     setSearchParams(searchParams);
   }
 
   function filterByGenres(key, value) {
-    /* const newParams = new URLSearchParams();
-    if (genreFilters.includes(value)) {
-      genreFilters = genreFilters.filter(item => item !== value);
-
-      newParams.set(key, genreFilters.join(","));
-      setSearchParams(newParams);
-    } else {
-      genreFilters.push(value);
-
-      newParams.set(key, genreFilters.join(","));
-      setSearchParams(newParams);
-    } */
-
     if (genreFilters.includes(value)) {
       genreFilters = genreFilters.filter(item => item !== value);
 
@@ -164,7 +147,7 @@ export default function Discover() {
           </div>
         </div>
 
-        <div>
+        <div className="flex gap-sm p-md">
           <label htmlFor="sort_by">sort by:</label>
           <select
             onChange={e => {
@@ -173,6 +156,7 @@ export default function Discover() {
             name="sort_by"
             id="sort_by"
             defaultValue={sortBy || ""}
+            className="bg-bg-300 rounded-md"
           >
             <option value={""}>--Choose filter</option>
             <option value="popularity.desc">Most Popular</option>
