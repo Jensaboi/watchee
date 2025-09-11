@@ -7,7 +7,7 @@ import App, { loader as rootLoader } from "./App.jsx";
 import MainLayout from "./layouts/MainLayout.jsx";
 import Home from "./pages/Home.jsx";
 import Movie, { loader as movieLoader } from "./pages/Movie.jsx";
-import Tv from "./pages/Tv.jsx";
+import Tv, { loader as tvLoader } from "./pages/Tv.jsx";
 import MediaDetails, {
   loader as mediaDetailsLoader,
 } from "./pages/MediaDetails.jsx";
@@ -35,7 +35,7 @@ const rotuer = createBrowserRouter([
         children: [
           { index: true, Component: Home },
           { path: "movie", Component: Movie, loader: movieLoader },
-          { path: "tv", Component: Tv },
+          { path: "tv", Component: Tv, loader: tvLoader },
           {
             path: "discover/:mediaType",
             Component: Discover,

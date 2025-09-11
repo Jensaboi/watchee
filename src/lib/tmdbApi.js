@@ -233,6 +233,30 @@ export async function fetchUpcoming({ mediaType, lang = "en-US" }) {
   return data.results;
 }
 
+export async function fetchAiringToday({ lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/tv/airing_today?language=${lang}&page=1&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function fetchAiringThisWeek({ lang = "en-US" }) {
+  const response = await fetch(
+    `${BASE_URL}/tv/on_the_air?language=${lang}&page=1&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
 export async function fetchWithQueryFilters(mediaType, searchParams) {
   console.log(
     `${BASE_URL}/discover/${mediaType}${searchParams}&  include_adult=false&api_key=${API_KEY}`

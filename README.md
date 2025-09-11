@@ -1,12 +1,10 @@
 ### todos
 
-- Fix Discover page
+- fetch all countries and use it in mediaWatchProviders filter.
+
+- Fix Discover page (started)
 
 - Fix Person Details Page
-
-- Fix Movie page
-
-- Fix Tv page
 
 - Add Seasons/Collection info in Media Details
 
