@@ -38,6 +38,17 @@ export default function Discover() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const totalPages = data.total_pages;
   const currentPage = data.page;
+
+  const sortBy = searchParams.get("sort_by");
+  let genreFilters =
+    searchParams
+      .get("with_genres")
+      ?.split(",")
+      ?.filter(item => item !== "") || [];
+
+  const existingGenresForMediaType =
+    mediaType === "movie" ? movieGenres : tvGenres;
+
   let pageNavArr = [];
   for (let i = 0; i < 5; i++) {
     if (i + currentPage > totalPages) {
@@ -47,18 +58,51 @@ export default function Discover() {
     }
   }
 
-  console.log("data", data);
-  console.log(searchParams.toString());
-  //console.log(movieGenres);
-  //console.log(tvGenres);
+  function addSearchFilters(key, value) {
+    /* const newParams = new URLSearchParams();
+    newParams.set(key, value); 
+    console.log(genreFilters);
+    */
+    searchParams.set(key, value);
+    setSearchParams(searchParams);
+  }
 
+  function filterByGenres(key, value) {
+    /* const newParams = new URLSearchParams();
+    if (genreFilters.includes(value)) {
+      genreFilters = genreFilters.filter(item => item !== value);
+
+      newParams.set(key, genreFilters.join(","));
+      setSearchParams(newParams);
+    } else {
+      genreFilters.push(value);
+
+      newParams.set(key, genreFilters.join(","));
+      setSearchParams(newParams);
+    } */
+
+    if (genreFilters.includes(value)) {
+      genreFilters = genreFilters.filter(item => item !== value);
+
+      searchParams.set(key, genreFilters.join(","));
+      setSearchParams(searchParams);
+    } else {
+      genreFilters.push(value);
+
+      searchParams.set(key, genreFilters.join(","));
+      setSearchParams(searchParams);
+    }
+  }
+  //console.log(existingGenresForMediaType);
+  //console.log("data", data);
+  //console.log("genreFilters", genreFilters);
   return (
     <>
       <section className="container p-lg mx-auto w-full h-full max-w-[1250px]">
-        <div className="flex items-center">
+        <div className="flex items-center gap-lg">
           <h2>Filters</h2>
-          <nav className="container mx-auto p-lg">
-            <ul className="flex items-center gap-lg">
+          <nav>
+            <ul className="flex items-center gap-md">
               <li>
                 <NavLink
                   className={({ isActive }) =>
@@ -81,24 +125,62 @@ export default function Discover() {
               </li>
             </ul>
           </nav>
-        </div>
-        <Form>
           <div>
-            <label htmlFor="sort_by">sort by:</label>
-            <select
-              onChange={e => {
-                setSearchParams(`sort_by=${e.target.value}`);
-              }}
-              name="sort_by"
-              id="sort_by"
-            >
-              <option value="popularity.desc">Most Popular</option>
-              <option value="popularity.asc">Less Popular</option>
-              <option value="primary_release_date.asc">Newest</option>
-              <option value="primary_release_date.desc">Oldest</option>
-            </select>
+            <Dropdown className="relative">
+              {({ isOpen, toggle, close }) => (
+                <>
+                  <Button onClick={toggle} variant="icon">
+                    Genres
+                  </Button>
+                  <div
+                    className={`${isOpen ? "block" : "hidden"} absolute bg-bg-300 p-lg rounded-md mt-2`}
+                  >
+                    <div className="p-md">
+                      <p>Filter with genres:</p>
+                    </div>
+                    <div className="grid grid-cols-2 min-w-80 gap-lg z-20">
+                      {existingGenresForMediaType.map(item => (
+                        <label htmlFor={item.id} key={item.id}>
+                          {item.name.toLowerCase() === "science fiction"
+                            ? "Sci-fi"
+                            : item.name}
+                          <input
+                            id={item.id}
+                            name={item.id}
+                            value={item.id.toString()}
+                            checked={genreFilters.includes(item.id.toString())}
+                            type="checkbox"
+                            onChange={e =>
+                              filterByGenres("with_genres", e.target.value)
+                            }
+                          />
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+            </Dropdown>
           </div>
-        </Form>
+        </div>
+
+        <div>
+          <label htmlFor="sort_by">sort by:</label>
+          <select
+            onChange={e => {
+              addSearchFilters("sort_by", e.target.value);
+            }}
+            name="sort_by"
+            id="sort_by"
+            defaultValue={sortBy || ""}
+          >
+            <option value={""}>--Choose filter</option>
+            <option value="popularity.desc">Most Popular</option>
+            <option value="popularity.asc">Less Popular</option>
+            <option value="primary_release_date.asc">Oldest</option>
+            <option value="primary_release_date.desc">Newest</option>
+          </select>
+        </div>
 
         <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-md">
           {navigation.state === "loading" ? (
@@ -124,6 +206,7 @@ export default function Discover() {
           <Button
             onClick={() => setSearchParams({ page: currentPage - 1 })}
             variant="page"
+            disabled={currentPage <= 1}
           >
             <ChevronLeft />
           </Button>
