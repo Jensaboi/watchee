@@ -181,13 +181,13 @@ export async function fetchRecommendations({ mediaType, id, lang = "en-US" }) {
   return data.results;
 }
 
-export async function fetchNowPlaying(
-  { mediaType, region = "us", lang = "en-US" },
-  signal
-) {
+export async function fetchNowPlaying({
+  mediaType,
+  region = "us",
+  lang = "en-US",
+}) {
   const response = await fetch(
-    `${BASE_URL}/${mediaType}/now_playing?language=${lang}&page=1&region=${region}&api_key=${API_KEY}`,
-    { signal }
+    `${BASE_URL}/${mediaType}/now_playing?language=${lang}&page=1&region=${region}&api_key=${API_KEY}`
   );
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
@@ -197,10 +197,9 @@ export async function fetchNowPlaying(
   return data.results;
 }
 
-export async function fetchPopular({ mediaType, lang = "en-US" }, signal) {
+export async function fetchPopular({ mediaType, lang = "en-US" }) {
   const response = await fetch(
-    `${BASE_URL}/${mediaType}/popular?language=${lang}&page=1&api_key=${API_KEY}`,
-    { signal }
+    `${BASE_URL}/${mediaType}/popular?language=${lang}&page=1&api_key=${API_KEY}`
   );
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
@@ -210,10 +209,9 @@ export async function fetchPopular({ mediaType, lang = "en-US" }, signal) {
   return data.results;
 }
 
-export async function fetchTopRated({ mediaType, lang = "en-US" }, signal) {
+export async function fetchTopRated({ mediaType, lang = "en-US" }) {
   const response = await fetch(
-    `${BASE_URL}/${mediaType}/top_rated?language=${lang}&page=1&api_key=${API_KEY}`,
-    { signal }
+    `${BASE_URL}/${mediaType}/top_rated?language=${lang}&page=1&api_key=${API_KEY}`
   );
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
@@ -223,10 +221,9 @@ export async function fetchTopRated({ mediaType, lang = "en-US" }, signal) {
   return data.results;
 }
 
-export async function fetchUpcoming({ mediaType, lang = "en-US" }, signal) {
+export async function fetchUpcoming({ mediaType, lang = "en-US" }) {
   const response = await fetch(
-    `${BASE_URL}/${mediaType}/upcoming?language=${lang}&page=1&api_key=${API_KEY}`,
-    { signal }
+    `${BASE_URL}/${mediaType}/upcoming?language=${lang}&page=1&api_key=${API_KEY}`
   );
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);

@@ -1,4 +1,3 @@
-import useApi from "../hooks/useApi";
 import {
   fetchNowPlaying,
   fetchTopRated,
@@ -8,20 +7,18 @@ import {
 import { Link, useRouteLoaderData } from "react-router";
 import Carosuel from "../components/ui/Carosuel";
 
+export async function loader() {
+  try {
+  } catch (error) {
+    throw Error({
+      message: error.message,
+      status: error.status,
+      statusText: error.statusText,
+    });
+  }
+}
 export default function Home() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
-
-  const {
-    data: popularMovies,
-    loading: popularMoviesLoading,
-    error: popularMoviesError,
-  } = useApi(fetchPopular, { mediaType: "movie" });
-
-  const {
-    data: upcomingMovies,
-    loading: upcomingMoviesLoading,
-    error: upcomingMoviesError,
-  } = useApi(fetchUpcoming, { mediaType: "movie" });
 
   return (
     <>
@@ -34,9 +31,7 @@ export default function Home() {
           it’s all here.
         </p>
       </section>
-      <section className="container mx-auto">
-        <Carosuel mediaType="movie" data={popularMovies} />
-      </section>
+      <section className="container mx-auto"></section>
     </>
   );
 }
