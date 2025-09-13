@@ -33,6 +33,18 @@ export async function fetchGenres({ mediaType, lang = "en" }) {
   return data.genres;
 }
 
+export async function fetchCountries({ lang = "en" }) {
+  const response = await fetch(
+    `${BASE_URL}/configuration/countries?language=${lang}&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data;
+}
+
 export async function fetchTmdbConfig() {
   const response = await fetch(`${BASE_URL}/configuration?api_key=${API_KEY}`);
 

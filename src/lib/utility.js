@@ -77,3 +77,11 @@ export function getTrailers(videosArr) {
     )
     .sort((a, b) => b.size - a.size);
 }
+
+export function getLangNameWithInitials(countryIntials, allCountriesArr) {
+  return (
+    allCountriesArr.find(
+      item => item?.iso_3166_1?.toUpperCase() === countryIntials?.toUpperCase()
+    ) || "Unknown"
+  );
+}

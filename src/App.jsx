@@ -5,6 +5,7 @@ import {
   fetchTmdbConfig,
   fetchGenres,
   fetchAgeRatingExplanation,
+  fetchCountries,
 } from "./lib/tmdbApi";
 
 export async function loader() {
@@ -15,12 +16,14 @@ export async function loader() {
       tvGenres,
       movieRatingExplanations,
       tvRatingExplanations,
+      allCountries,
     ] = await Promise.all([
       fetchTmdbConfig(),
       fetchGenres({ mediaType: "movie" }),
       fetchGenres({ mediaType: "tv" }),
       fetchAgeRatingExplanation({ mediaType: "movie" }),
       fetchAgeRatingExplanation({ mediaType: "tv" }),
+      fetchCountries({ lang: "en-US" }),
     ]);
 
     return {
@@ -29,6 +32,7 @@ export async function loader() {
       tvGenres,
       movieRatingExplanations,
       tvRatingExplanations,
+      allCountries,
     };
   } catch (error) {
     throw Error(`ERROR:${error.message} status: ${error.status}`);

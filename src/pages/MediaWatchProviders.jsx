@@ -11,6 +11,7 @@ import { X } from "lucide-react";
 
 import Button from "../components/ui/Button";
 import Dropdown from "../components/ui/Dropdown";
+import { getLangNameWithInitials } from "../lib/utility";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
@@ -24,10 +25,10 @@ export async function loader({ params }) {
 
 export default function MediaWatchProviders() {
   const watchProvidersPromise = useLoaderData();
-  const { config } = useRouteLoaderData("root");
+  const { config, allCountries } = useRouteLoaderData("root");
   const [searchParams, setSearchParams] = useSearchParams();
   const { mediaType } = useParams();
-
+  console.log(allCountries);
   function addSearchFilters(key, value) {
     searchParams.set(key, value);
     setSearchParams(searchParams, { replace: true, preventScrollReset: true });
@@ -87,7 +88,8 @@ export default function MediaWatchProviders() {
                 >
                   {possibleCountries.map((item, i) => (
                     <option key={i + item} value={item}>
-                      {item}
+                      {getLangNameWithInitials(item, allCountries)
+                        ?.english_name || "Unknown"}
                     </option>
                   ))}
                 </select>
