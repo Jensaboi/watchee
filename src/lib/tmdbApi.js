@@ -1,5 +1,14 @@
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const TOKEN = import.meta.env.VITE_TMDB_TOKEN;
+
 const BASE_URL = "https://api.themoviedb.org/3";
+const getOptions = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization: `Bearer ${TOKEN}`,
+  },
+};
 
 export async function fetchWithSearchQuery(
   { query, mediaType, lang = "en-US" },

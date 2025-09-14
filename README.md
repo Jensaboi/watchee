@@ -15,3 +15,5 @@
 - Fix MediaReviewsPage
 
 - Add Seasons/Collection info in Media Details
+
+- a11s
