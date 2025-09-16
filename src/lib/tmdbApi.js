@@ -166,18 +166,6 @@ export async function fetchAgeRatingExplanation({ mediaType }) {
   return data.certifications;
 }
 
-export async function fetchReviews({ mediaType, id, lang = "en-US" }) {
-  const response = await fetch(
-    `${BASE_URL}/${mediaType}/${id}/reviews?language=${lang}&page=1&api_key=${API_KEY}`
-  );
-
-  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
-
-  const data = await response.json();
-
-  return data.results;
-}
-
 export async function fetchSimilar({ mediaType, id, lang = "en-US" }) {
   const response = await fetch(
     `${BASE_URL}/${mediaType}/${id}/similar?language=${lang}&page=1&api_key=${API_KEY}`
@@ -269,6 +257,18 @@ export async function fetchAiringToday({ lang = "en-US" }) {
 export async function fetchAiringThisWeek({ lang = "en-US" }) {
   const response = await fetch(
     `${BASE_URL}/tv/on_the_air?language=${lang}&page=1&api_key=${API_KEY}`
+  );
+
+  if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);
+
+  const data = await response.json();
+
+  return data.results;
+}
+
+export async function fetchReviews({ mediaType, id, lang }) {
+  const response = await fetch(
+    `${BASE_URL}/${mediaType}/${id}/reviews?api_key=${API_KEY}`
   );
 
   if (!response.ok) throw new Error(`TMDB fetch failed: ${response.status}`);

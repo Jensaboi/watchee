@@ -22,7 +22,6 @@ export default function SearchAndResults({ closeModal }) {
     closeModal();
     setQuery("");
   }
-
   return (
     <Dropdown>
       {({ isOpen, close, open }) => (
@@ -39,7 +38,7 @@ export default function SearchAndResults({ closeModal }) {
                       className="bg-bg-300 text-text-400 pl-5 pr-3 py-3 rounded-l-full flex-center gap-1"
                       onClick={toggle}
                     >
-                      All
+                      {mediaType === "multi" ? "All" : mediaType}
                       {isOpen ? (
                         <ChevronUp size={20} />
                       ) : (
@@ -49,16 +48,50 @@ export default function SearchAndResults({ closeModal }) {
                     {isOpen && (
                       <ul className="absolute top-1/1 mt-[2px] left-1 bg-bg-400 w-45 py-sm rounded-sm z-80 border-bg-bg-500">
                         <li className="p-md text-text-100 hover:bg-bg-500 cursor-pointer">
-                          All
+                          <label htmlFor="mediaType">
+                            All
+                            <input
+                              onChange={e => setMediaType(e.target.value)}
+                              name="mediaType"
+                              id="multi"
+                              value="multi"
+                              type="radio"
+                            />
+                          </label>
                         </li>
                         <li className="p-md text-text-100 hover:bg-bg-500 cursor-pointer">
-                          Movies
+                          <label htmlFor="mediaType">
+                            Movies
+                            <input
+                              onChange={e => setMediaType(e.target.value)}
+                              name="mediaType"
+                              id=""
+                              value="movie"
+                              type="radio"
+                            />
+                          </label>
                         </li>
                         <li className="p-md text-text-100 hover:bg-bg-500 cursor-pointer">
-                          Tv-shows
+                          <label htmlFor="mediaType">
+                            Tv-shows
+                            <input
+                              onChange={e => setMediaType(e.target.value)}
+                              name="mediaType"
+                              value="tv"
+                              type="radio"
+                            />
+                          </label>
                         </li>
                         <li className="p-md text-text-100 hover:bg-bg-500 cursor-pointer">
-                          People
+                          <label htmlFor="mediaType">
+                            People
+                            <input
+                              onChange={e => setMediaType(e.target.value)}
+                              name="mediaType"
+                              value="person"
+                              type="radio"
+                            />
+                          </label>
                         </li>
                       </ul>
                     )}
@@ -89,7 +122,7 @@ export default function SearchAndResults({ closeModal }) {
                       closeSearch();
                       close();
                     }}
-                    to={`/${item?.media_type}/${item?.id}`}
+                    to={`/${mediaType === "multi" ? item.media_type : mediaType}/${item?.id}`}
                     key={item?.id}
                     className="flex justify-start gap-sm p-sm hover:bg-bg-300 hover:md:bg-bg-500"
                   >
@@ -104,10 +137,7 @@ export default function SearchAndResults({ closeModal }) {
                       </h3>
                       <div className="flex justify-start items-center gap-sm">
                         <span className="text-text-500 md:text-text-400 text-base">
-                          {item?.media_type?.toLowerCase() === "tv" && "TVshow"}
-                          {item?.media_type?.toLowerCase() !== "tv" &&
-                            item?.media_type?.charAt(0)?.toUpperCase() +
-                              item?.media_type?.slice(1)}
+                          {mediaType === "multi" ? item.media_type : mediaType}
                         </span>
                         <span className="size-1 rounded-full bg-text-500 md:text-text-400"></span>
                         <span className="text-text-500 md:text-text-400 text-base">

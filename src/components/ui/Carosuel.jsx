@@ -1,4 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { Link } from "react-router";
 import MediaCard from "../MediaCard";
@@ -70,7 +71,7 @@ export default function Carosuel({ mediaType = null, data = [] }) {
       >
         {data.map(item => (
           <Link
-            key={item.id}
+            key={nanoid()}
             style={{ flexBasis: `${(100 / colNum).toFixed(2)}%` }}
             className="flex-shrink-0 rounded-lg px-xs sm:px-sm"
             to={`/${mediaType}/${item.id}`}

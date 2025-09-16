@@ -12,7 +12,7 @@ export default function VideoPlayerModal({
   headerText,
   src,
 }) {
-  return (
+  return ReactPlayer.canPlay(src) ? (
     <Modal isOpen={isOpen} close={close}>
       <div className="w-full h-full flex-center">
         <div className="w-full rounded-md bg-bg-100 container max-w-[1024px] aspect-16/9">
@@ -27,6 +27,19 @@ export default function VideoPlayerModal({
             style={{ width: "100%", height: "100%" }}
             src={src}
           />
+        </div>
+      </div>
+    </Modal>
+  ) : (
+    <Modal isOpen={isOpen} close={close}>
+      <div className="w-full h-full flex-center">
+        <div className="w-full rounded-md bg-bg-100 container max-w-[1024px] aspect-16/9">
+          <div className="px-lg py-md flex justify-between items-center">
+            <h3>No trailer to play</h3>
+            <Button onClick={close} variant="icon">
+              <X />
+            </Button>
+          </div>
         </div>
       </div>
     </Modal>

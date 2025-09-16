@@ -4,7 +4,7 @@ import {
   fetchPopular,
   fetchUpcoming,
 } from "../lib/tmdbApi";
-import { Link, useRouteLoaderData } from "react-router";
+import { useRouteLoaderData } from "react-router";
 import Carosuel from "../components/ui/Carosuel";
 
 export async function loader() {
@@ -17,9 +17,9 @@ export async function loader() {
     });
   }
 }
+
 export default function Home() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
-
   return (
     <>
       <section className="container mx-auto mt-25 p-xl ">

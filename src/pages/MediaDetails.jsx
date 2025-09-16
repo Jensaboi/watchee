@@ -41,7 +41,6 @@ import placeHolderImg from "../assets/placeholder.png";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
-
   try {
     const media = await fetchDetails({ mediaType, id });
     const ageRatings = await fetchAgeRatings({ ...params });
@@ -80,13 +79,6 @@ export default function MediaDetails() {
   const navigate = useNavigate();
   const { mediaType } = useParams();
   const trailerPlayer = useToggle();
-
-  //console.log("details", media);
-  //console.log("videos", videosPromise);
-  //console.log("ratings", ageRatings);
-  //console.log(movieRatingExplanations);
-  //console.log("Similar", similarPromise);
-  //console.log("recommendations", recommendationsPromise);
 
   let ageRatingExplanations =
     mediaType === "movie" ? movieRatingExplanations : tvRatingExplanations;

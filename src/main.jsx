@@ -28,6 +28,11 @@ const rotuer = createBrowserRouter([
     path: "/",
     Component: App,
     loader: rootLoader,
+    hydrateFallbackElement: (
+      <div className="w-full h-screen flex-center">
+        <h1>Loading page...</h1>
+      </div>
+    ),
     id: "root",
     children: [
       {

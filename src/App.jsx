@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "./hooks/scrollToTop";
-
 import {
   fetchTmdbConfig,
   fetchGenres,

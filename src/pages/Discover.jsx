@@ -82,7 +82,7 @@ export default function Discover() {
   return (
     <>
       <section className="container p-lg mx-auto w-full h-full max-w-[1250px]">
-        <div className="flex items-center gap-lg">
+        <div className="flex items-center gap-lg flex-wrap">
           <h2>Filters</h2>
           <nav>
             <ul className="flex items-center gap-md">
@@ -108,43 +108,72 @@ export default function Discover() {
               </li>
             </ul>
           </nav>
-          <div>
-            <Dropdown className="relative">
-              {({ isOpen, toggle, close }) => (
-                <>
-                  <Button onClick={toggle} variant="icon">
-                    Genres
-                  </Button>
-                  <div
-                    className={`${isOpen ? "block" : "hidden"} absolute bg-bg-300 p-lg rounded-md mt-2`}
-                  >
-                    <div className="p-md">
-                      <p>Filter with genres:</p>
-                    </div>
-                    <div className="grid grid-cols-2 min-w-80 gap-lg z-20">
-                      {existingGenresForMediaType.map(item => (
-                        <label htmlFor={item.id} key={item.id}>
-                          {item.name.toLowerCase() === "science fiction"
-                            ? "Sci-fi"
-                            : item.name}
-                          <input
-                            id={item.id}
-                            name={item.id}
-                            value={item.id.toString()}
-                            checked={genreFilters.includes(item.id.toString())}
-                            type="checkbox"
-                            onChange={e =>
-                              filterByGenres("with_genres", e.target.value)
-                            }
-                          />
-                        </label>
-                      ))}
-                    </div>
+
+          <Dropdown className="relative">
+            {({ isOpen, toggle, close }) => (
+              <>
+                <Button onClick={toggle} variant="icon">
+                  Genres
+                </Button>
+                <div
+                  className={`${isOpen ? "block" : "hidden"} absolute bg-bg-300 p-lg z-50 rounded-md mt-2`}
+                >
+                  <div className="p-md">
+                    <p>Filter with genres:</p>
                   </div>
-                </>
-              )}
-            </Dropdown>
-          </div>
+                  <div className="grid grid-cols-2 min-w-80 gap-lg z-20">
+                    {existingGenresForMediaType.map(item => (
+                      <label htmlFor={item.id} key={item.id}>
+                        {item.name.toLowerCase() === "science fiction"
+                          ? "Sci-fi"
+                          : item.name}
+                        <input
+                          id={item.id}
+                          name={item.id}
+                          value={item.id.toString()}
+                          checked={genreFilters.includes(item.id.toString())}
+                          type="checkbox"
+                          onChange={e =>
+                            filterByGenres("with_genres", e.target.value)
+                          }
+                        />
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </Dropdown>
+
+          <Dropdown>
+            {({ isOpen, toggle }) => (
+              <>
+                <Button onClick={toggle} variant="icon">
+                  Vote count
+                </Button>
+                <div
+                  className={`${isOpen ? "block" : "hidden"} absolute z-50 bg-bg-300 p-lg rounded-md mt-2`}
+                >
+                  text
+                </div>
+              </>
+            )}
+          </Dropdown>
+
+          <Dropdown>
+            {({ isOpen, toggle }) => (
+              <>
+                <Button onClick={toggle} variant="icon">
+                  Release year
+                </Button>
+                <div
+                  className={`${isOpen ? "block" : "hidden"} z-50 absolute bg-bg-300 p-lg rounded-md mt-2`}
+                >
+                  text
+                </div>
+              </>
+            )}
+          </Dropdown>
         </div>
 
         <div className="flex gap-sm p-md">
