@@ -1,3 +1,5 @@
+import Overview from "./Overview";
+
 export default function ReviewCard({
   profileAvatar,
   author,
@@ -6,8 +8,8 @@ export default function ReviewCard({
   ...rest
 }) {
   return (
-    <article {...rest}>
-      <div className="rounded-full size-16 aspect-square overflow-hidden float-left">
+    <article className="min-w-100 bg-bg-300 p-md rounded-md" {...rest}>
+      <div className="rounded-full size-16 aspect-square overflow-hidden mr-md float-left">
         <img
           className="w-full h-full object-center object-cover"
           src={profileAvatar}
@@ -16,7 +18,7 @@ export default function ReviewCard({
       <div>
         <h3>{author}</h3>
 
-        <p>{body}</p>
+        <Overview overview={body} />
         <span>{date}</span>
       </div>
     </article>

@@ -1,6 +1,6 @@
 ### todos
 
-- Fix MediaReviewsPage
+- Fix MediaReviewsPage (wip)
 
 - Add Seasons/Collection info in Media Details
 

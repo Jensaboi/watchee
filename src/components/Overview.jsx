@@ -5,12 +5,12 @@ export default function Overview({ overview }) {
   return (
     <div>
       <p
-        className={`${isOpen ? "" : "line-clamp-3"} tracking-wide leading-relaxed`}
+        className={`${isOpen ? "" : "line-clamp-3"} tracking-wide leading-relaxed font-normal text-sm`}
       >
         {overview}
       </p>
       <button
-        className="text-text-400 inline-flex items-center justify-center"
+        className="text-text-400 text-sm font-normal inline-flex items-center justify-center"
         onClick={toggle}
       >
         {isOpen ? "View less" : "View more"}

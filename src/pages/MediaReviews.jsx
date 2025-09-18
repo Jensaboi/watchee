@@ -25,7 +25,7 @@ export default function MediaReviews() {
           {reviews => {
             console.log(reviews);
             return (
-              <div className="flex items-center flex-row flex-wrap">
+              <div className="flex items-center flex-row gap-lg w-full overflow-x-scroll">
                 {reviews.map(item => (
                   <ReviewCard
                     profileAvatar={

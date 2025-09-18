@@ -43,43 +43,57 @@ export default function Tv() {
 
   return (
     <>
-      <section className="container mx-auto">
-        <h2 className="mb-8">Popular shows Right Now</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={popularPromise}>
-            {popular => <Carosuel data={popular} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={popularPromise}>
+          {popular =>
+            popular?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Popular shows Right Now</h2>{" "}
+                <Carosuel data={popular} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Shows Airing Today</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={showsTodayPromise}>
-            {showsToday => <Carosuel data={showsToday} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={showsTodayPromise}>
+          {showsToday =>
+            showsToday?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Shows Airing Today</h2>{" "}
+                <Carosuel data={showsToday} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Shows Airing This Week</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={showsThisWeekPromise}>
-            {showsThisWeek => (
-              <Carosuel data={showsThisWeek} mediaType={mediaType} />
-            )}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={showsThisWeekPromise}>
+          {showsThisWeek =>
+            showsThisWeek?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Shows Airing This Week</h2>
+                <Carosuel data={showsThisWeek} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Top Rated On TMD</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={topRatedPromise}>
-            {topRated => <Carosuel data={topRated} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={topRatedPromise}>
+          {topRated =>
+            topRated?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Top Rated On TMD</h2>{" "}
+                <Carosuel data={topRated} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
     </>
   );
 }

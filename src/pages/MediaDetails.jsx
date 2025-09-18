@@ -230,25 +230,32 @@ export default function MediaDetails() {
             }
           />
         </section>
-        <section className="mt-30 container mx-auto">
-          <h2 className="mb-12">Similar to {title}</h2>
-          <Suspense>
-            <Await resolve={similarPromise}>
-              {similar => <Carosuel mediaType={mediaType} data={similar} />}
-            </Await>
-          </Suspense>
-        </section>
 
-        <section className="my-30 container mx-auto">
-          <h2 className="mb-12">Recommendations</h2>
-          <Suspense>
-            <Await resolve={recommendationsPromise}>
-              {recommendations => (
-                <Carosuel mediaType={mediaType} data={recommendations} />
-              )}
-            </Await>
-          </Suspense>
-        </section>
+        <Suspense>
+          <Await resolve={similarPromise}>
+            {similar =>
+              similar?.[0] && (
+                <section className="mt-30 container mx-auto">
+                  <h2 className="mb-12">Similar to {title}</h2>
+                  <Carosuel mediaType={mediaType} data={similar} />
+                </section>
+              )
+            }
+          </Await>
+        </Suspense>
+
+        <Suspense>
+          <Await resolve={recommendationsPromise}>
+            {recommendations =>
+              recommendations?.[0] && (
+                <section className="my-30 container mx-auto">
+                  <h2 className="mb-12">Recommendations</h2>
+                  <Carosuel mediaType={mediaType} data={recommendations} />
+                </section>
+              )
+            }
+          </Await>
+        </Suspense>
       </div>
     </>
   );

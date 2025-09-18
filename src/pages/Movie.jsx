@@ -43,41 +43,57 @@ export default function Movie() {
 
   return (
     <>
-      <section className="container mx-auto">
-        <h2 className="mb-8">Movies Now In Cinema</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={nowPlayingPromise}>
-            {nowPlaying => <Carosuel data={nowPlaying} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={nowPlayingPromise}>
+          {nowPlaying =>
+            nowPlaying?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Movies Now In Cinema</h2>
+                <Carosuel data={nowPlaying} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Popular Movies Right Now</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={popularPromise}>
-            {popular => <Carosuel data={popular} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={popularPromise}>
+          {popular =>
+            popular?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Popular Movies Right Now</h2>
+                <Carosuel data={popular} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Upcoming movies</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={upComingPromise}>
-            {upComing => <Carosuel data={upComing} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={upComingPromise}>
+          {upComing =>
+            upComing?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Upcoming movies</h2>
+                <Carosuel data={upComing} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
 
-      <section className="container mx-auto">
-        <h2 className="mb-8">Top Rated Movies On TMD</h2>
-        <Suspense fallback={<h2>loading...</h2>}>
-          <Await resolve={topRatedPromise}>
-            {topRated => <Carosuel data={topRated} mediaType={mediaType} />}
-          </Await>
-        </Suspense>
-      </section>
+      <Suspense fallback={<h2>loading...</h2>}>
+        <Await resolve={topRatedPromise}>
+          {topRated =>
+            topRated?.[0] && (
+              <section className="container mx-auto">
+                <h2 className="mb-8">Top Rated Movies On TMD</h2>{" "}
+                <Carosuel data={topRated} mediaType={mediaType} />
+              </section>
+            )
+          }
+        </Await>
+      </Suspense>
     </>
   );
 }
