@@ -3,7 +3,7 @@ import { fetchReviews } from "../lib/tmdbApi";
 import { Suspense } from "react";
 import { useRouteLoaderData } from "react-router";
 import ReviewCard from "../components/ReviewCard";
-
+import placeHolderImg from "../assets/placeholder.png";
 export async function loader({ params }) {
   const { mediaType, id } = params;
 
@@ -17,6 +17,7 @@ export async function loader({ params }) {
 export default function MediaReviews() {
   const reviewsPromise = useLoaderData();
   const { config } = useRouteLoaderData("root");
+
   return (
     <>
       <Suspense fallback={<p>Loading reviews...</p>}>
@@ -24,9 +25,20 @@ export default function MediaReviews() {
           {reviews => {
             console.log(reviews);
             return (
-              <div>
+              <div className="flex items-center flex-row flex-wrap">
                 {reviews.map(item => (
-                  <ReviewCard key={item.id} />
+                  <ReviewCard
+                    profileAvatar={
+                      item.author_details.avatar_path
+                        ? config.profileBaseUrl[0] +
+                          item.author_details.avatar_path
+                        : placeHolderImg
+                    }
+                    author={item.author}
+                    body={item.content}
+                    date={item.created_at}
+                    key={item.id}
+                  />
                 ))}
               </div>
             );

@@ -29,7 +29,7 @@ import Button from "../components/ui/Button";
 import VideoPlayerModal from "../components/VideoPlayerModal";
 import MediaTitle from "../components/MediaTitle";
 import MediaGenres from "../components/MediaGenres";
-import MediaOverview from "../components/MediaOverview";
+import Overview from "../components/Overview";
 import MediaDetailsNav from "../components/MediaDetailsNav";
 import MediaDetailsRatings, {
   MediaDetailsRatingsFallback,
@@ -189,7 +189,7 @@ export default function MediaDetails() {
               <p className="text-center text-text-400">"{media.tagline}"</p>
             )}
 
-            <MediaOverview overview={media.overview} />
+            <Overview overview={media.overview} />
           </div>
         </section>
 

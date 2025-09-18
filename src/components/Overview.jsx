@@ -1,6 +1,6 @@
 import useToggle from "../hooks/useToggle";
 import { ChevronDown, ChevronUp } from "lucide-react";
-export default function MediaOverview({ overview }) {
+export default function Overview({ overview }) {
   const { isOpen, toggle } = useToggle();
   return (
     <div>
