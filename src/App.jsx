@@ -1,5 +1,6 @@
 import { Outlet } from "react-router-dom";
 import ScrollToTop from "./hooks/scrollToTop";
+import WatchListProvider from "./context/WatchListProvider";
 import {
   fetchTmdbConfig,
   fetchGenres,
@@ -41,8 +42,10 @@ export async function loader() {
 function App() {
   return (
     <>
-      <ScrollToTop />
-      <Outlet />
+      <WatchListProvider>
+        <ScrollToTop />
+        <Outlet />
+      </WatchListProvider>
     </>
   );
 }

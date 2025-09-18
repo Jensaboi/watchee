@@ -19,7 +19,6 @@ import useToggle from "../hooks/useToggle";
 import {
   getYearStr,
   formatRunTimeStr,
-  getGenres,
   getAgeRating,
   getLanguageName,
   getAgeRatingExplanation,
@@ -36,8 +35,9 @@ import MediaDetailsRatings, {
 } from "../components/MediaDetailsRatings";
 import MediaDetailsSidebar from "../components/MediaDetailsSidebar";
 import Carosuel from "../components/ui/Carosuel";
-import { MoveLeft, Plus, Star } from "lucide-react";
+import { MoveLeft, Plus, Star, X } from "lucide-react";
 import placeHolderImg from "../assets/placeholder.png";
+import { useWatchList } from "../context/WatchListProvider";
 
 export async function loader({ params }) {
   const { mediaType, id } = params;
@@ -86,7 +86,7 @@ export default function MediaDetails() {
   const title = media?.title || media?.name;
   const releaseDate = media?.release_date || media.first_air_date;
   const ageRating = getAgeRating(mediaType, ageRatings);
-
+  const { watchList, addToWatchList, removeFromWatchList } = useWatchList();
   return (
     <>
       <div className="relative p-lg w-full h-full min-h-[86vh]">
@@ -161,9 +161,18 @@ export default function MediaDetails() {
                   }}
                 </Await>
               </Suspense>
-              <Button variant="icon">
-                <Plus />
-              </Button>
+              {watchList.some(item => item.id === media.id) ? (
+                <Button
+                  onClick={() => removeFromWatchList(media)}
+                  variant="icon"
+                >
+                  <X />
+                </Button>
+              ) : (
+                <Button onClick={() => addToWatchList(media)} variant="icon">
+                  <Plus />
+                </Button>
+              )}
 
               <Button variant="icon">
                 <Star />
