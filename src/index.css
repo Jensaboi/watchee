@@ -70,3 +70,13 @@
     @apply hover:bg-bg-400 transition-all ease-in duration-300 p-md rounded-full;
   }
 }
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

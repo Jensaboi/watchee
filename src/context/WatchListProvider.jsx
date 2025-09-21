@@ -22,8 +22,8 @@ export default function WatchListProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("watchList", JSON.stringify(watchList));
-    console.log(watchList);
   }, [watchList]);
+
   return (
     <watchListContext.Provider
       value={{ watchList, addToWatchList, removeFromWatchList }}

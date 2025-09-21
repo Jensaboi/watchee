@@ -25,7 +25,7 @@ export default function MediaReviews() {
           {reviews => {
             console.log(reviews);
             return (
-              <div className="flex items-center flex-row gap-lg w-full overflow-x-scroll">
+              <div className="flex items-start flex-row no-scrollbar gap-lg w-full overflow-x-scroll">
                 {reviews.map(item => (
                   <ReviewCard
                     profileAvatar={
@@ -36,7 +36,7 @@ export default function MediaReviews() {
                     }
                     author={item.author}
                     body={item.content}
-                    date={item.created_at}
+                    date={new Date(item.created_at).toLocaleDateString()}
                     key={item.id}
                   />
                 ))}

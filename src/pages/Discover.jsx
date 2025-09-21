@@ -3,7 +3,6 @@ import {
   useLoaderData,
   useRouteLoaderData,
   NavLink,
-  Form,
   Link,
   useSearchParams,
   useParams,
@@ -19,6 +18,8 @@ import {
   ChevronRight,
 } from "lucide-react";
 import placeholderImg from "../assets/placeholder.png";
+import { useState } from "react";
+
 export async function loader({ request, params }) {
   const { mediaType } = params;
   const url = new URL(request.url);
@@ -38,6 +39,8 @@ export default function Discover() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const totalPages = data.total_pages;
   const currentPage = data.page;
+  const [votesFrom, setVotesFrom] = useState(0);
+  const [votesTo, setVotesTo] = useState(10000);
 
   const sortBy = searchParams.get("sort_by");
   let genreFilters =
@@ -82,33 +85,32 @@ export default function Discover() {
   return (
     <>
       <section className="container p-lg mx-auto w-full h-full max-w-[1250px]">
-        <div className="flex items-center gap-lg flex-wrap">
+        <nav className="mb-5">
+          <ul className="flex items-center gap-md">
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "active" : "not-active"
+                }
+                to="/discover/movie"
+              >
+                Movies
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className={({ isActive }) =>
+                  isActive ? "active" : "not-active"
+                }
+                to="/discover/tv"
+              >
+                Tvshows
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+        <div className="flex items-center gap-lg ">
           <h2>Filters</h2>
-          <nav>
-            <ul className="flex items-center gap-md">
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "active" : "not-active"
-                  }
-                  to="/discover/movie"
-                >
-                  Movies
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    isActive ? "active" : "not-active"
-                  }
-                  to="/discover/tv"
-                >
-                  Tvshows
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-
           <Dropdown className="relative">
             {({ isOpen, toggle, close }) => (
               <>
@@ -116,7 +118,7 @@ export default function Discover() {
                   Genres
                 </Button>
                 <div
-                  className={`${isOpen ? "block" : "hidden"} absolute bg-bg-300 p-lg z-50 rounded-md mt-2`}
+                  className={`${isOpen ? "block" : "hidden"} absolute bg-bg-500 p-lg z-50 rounded-md mt-2`}
                 >
                   <div className="p-md">
                     <p>Filter with genres:</p>
@@ -152,9 +154,36 @@ export default function Discover() {
                   Vote count
                 </Button>
                 <div
-                  className={`${isOpen ? "block" : "hidden"} absolute z-50 bg-bg-300 p-lg rounded-md mt-2`}
+                  className={`${isOpen ? "block" : "hidden"} absolute z-50 bg-bg-500 p-lg rounded-md mt-2 w-100`}
                 >
-                  text
+                  <h3 className="text-md">Filter by votes</h3>
+                  <div className="flex flex-col gap-lg">
+                    <div>
+                      <span>From: {votesFrom}</span>
+                      <input
+                        className="w-full"
+                        value={votesFrom}
+                        onChange={e => setVotesFrom(e.target.value)}
+                        type="range"
+                        min={0}
+                        max={5000}
+                      />
+                    </div>
+                    <div>
+                      <span>To: {votesTo}</span>
+                      <input
+                        className="w-full"
+                        value={votesTo}
+                        onChange={e => setVotesTo(e.target.value)}
+                        type="range"
+                        min={5000}
+                        max={10000}
+                      />
+                    </div>
+                    <Button variant="solid" size="sm">
+                      Apply
+                    </Button>
+                  </div>
                 </div>
               </>
             )}

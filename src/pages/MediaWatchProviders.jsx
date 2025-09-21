@@ -28,7 +28,7 @@ export default function MediaWatchProviders() {
   const { config, allCountries } = useRouteLoaderData("root");
   const [searchParams, setSearchParams] = useSearchParams();
   const { mediaType } = useParams();
-  console.log(allCountries);
+
   function addSearchFilters(key, value) {
     searchParams.set(key, value);
     setSearchParams(searchParams, { replace: true, preventScrollReset: true });
