@@ -10,7 +10,7 @@ export default function WatchListProvider({ children }) {
   );
 
   function addToWatchList(mediaObj, mediaType = null) {
-    mediaObj.media_type = mediaType;
+    mediaObj.mediaType = mediaType;
     if (watchList.some(item => item.id === mediaObj.id)) return;
     setWatchList(prev => [...prev, mediaObj]);
   }
@@ -22,6 +22,7 @@ export default function WatchListProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("watchList", JSON.stringify(watchList));
+    console.log("Watchlist:", watchList);
   }, [watchList]);
 
   return (

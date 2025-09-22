@@ -22,6 +22,7 @@ import Discover, { loader as discoverLoader } from "./pages/Discover.jsx";
 import MediaWatchProviders, {
   loader as mediaWatchProvidersLoader,
 } from "./pages/MediaWatchProviders.jsx";
+import WatchlistPage from "./pages/WatchlistPage.jsx";
 
 const rotuer = createBrowserRouter([
   {
@@ -45,6 +46,10 @@ const rotuer = createBrowserRouter([
             path: "discover/:mediaType",
             Component: Discover,
             loader: discoverLoader,
+          },
+          {
+            path: "watchlist",
+            Component: WatchlistPage,
           },
           {
             path: ":mediaType/:id",

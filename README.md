@@ -4,11 +4,11 @@
 
 - Fix Discover page (wip)
 
+- Add view watchlist and favorites(wip)
+
 - Add Seasons/Collection info in Media Details
 
 - Fix Person Details Page
-
-- Add view watchlist and favorites
 
 - Add Error Component
 

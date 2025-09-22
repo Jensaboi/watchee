@@ -169,7 +169,10 @@ export default function MediaDetails() {
                   <X />
                 </Button>
               ) : (
-                <Button onClick={() => addToWatchList(media)} variant="icon">
+                <Button
+                  onClick={() => addToWatchList(media, mediaType)}
+                  variant="icon"
+                >
                   <Plus />
                 </Button>
               )}
