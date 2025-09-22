@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import placeholderImg from "../assets/placeholder.png";
 import { useState } from "react";
+import { debounce } from "../lib/utility";
 
 export async function loader({ request, params }) {
   const { mediaType } = params;
@@ -39,8 +40,8 @@ export default function Discover() {
   const { config, movieGenres, tvGenres } = useRouteLoaderData("root");
   const totalPages = data.total_pages;
   const currentPage = data.page;
-  const [votesFrom, setVotesFrom] = useState(0);
-  const [votesTo, setVotesTo] = useState(10000);
+  const voteCountGreaterThen = searchParams.get("vote_count.gte") ?? 0;
+  const voteCountLessThen = searchParams.get("vote_count.lte") ?? 10000;
 
   const sortBy = searchParams.get("sort_by");
   let genreFilters =
@@ -159,22 +160,30 @@ export default function Discover() {
                   <h3 className="text-md">Filter by votes</h3>
                   <div className="flex flex-col gap-lg">
                     <div>
-                      <span>From: {votesFrom}</span>
                       <input
                         className="w-full"
-                        value={votesFrom}
-                        onChange={e => setVotesFrom(e.target.value)}
+                        defaultValue={voteCountGreaterThen}
+                        onChange={e =>
+                          debounce(
+                            addSearchFilters("vote_count.gte", e.target.value),
+                            500
+                          )
+                        }
                         type="range"
                         min={0}
                         max={5000}
                       />
                     </div>
                     <div>
-                      <span>To: {votesTo}</span>
                       <input
                         className="w-full"
-                        value={votesTo}
-                        onChange={e => setVotesTo(e.target.value)}
+                        defaultValue={voteCountLessThen}
+                        onChange={e =>
+                          debounce(
+                            addSearchFilters("vote_count.lte", e.target.value),
+                            500
+                          )
+                        }
                         type="range"
                         min={5000}
                         max={10000}
